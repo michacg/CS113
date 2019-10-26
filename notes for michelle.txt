@@ -1,0 +1,16 @@
+note for michelle:
+
+when exporting from maya
+*select all bones and model
+*export in fbx 2012
+*export all animation
+
+things to do when importing model into unity
+*uncheck conver units
+*set rig's root node
+*clip animations
+
+get texture in unity:
+*from import settings: export material and texture
+*in the model's hiearchy view (the actual mesh),
+	change the shader to unit/texture
