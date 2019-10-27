@@ -1,5 +1,9 @@
 note for michelle:
 
+when modeling in maya: 
+*model with camera facing Z
+	where: Y is up and X is right
+
 when exporting from maya
 *select all bones and model
 *export in fbx 2012
