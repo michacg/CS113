@@ -16,6 +16,7 @@ public class NpcController : MonoBehaviour
 
     //Add Locations you want NPC to travel to.
     [SerializeField] List<GameObject> locations = new List<GameObject>();
+    [SerializeField] bool randomlySelectLocations = false;
     [SerializeField] float lookRadius = 5f;
     [SerializeField] float speed;
 
@@ -78,7 +79,11 @@ public class NpcController : MonoBehaviour
         currentState = State.Action;
         float secondsDoingAction = Random.Range(actionTimeSecMinimum, actionTimeSecMaximum);
         yield return new WaitForSeconds(secondsDoingAction);
-        i = (i + 1) % locations.Count;
+
+        if (randomlySelectLocations)
+            i = Random.Range(0, locations.Count);
+        else
+            i = (i + 1) % locations.Count;
         currentState = State.walking;
     }
 
