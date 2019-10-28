@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f94550ce00353ba4eb1f58383b32cc2e, type: 3}
+  m_Name: Phase1
+  m_EditorClassIdentifier: 
+  phaseName: Food
+  majorTasks:
+  - {fileID: 11400000, guid: 3a2885a668de0e448b971d20f30ad1e9, type: 2}
+  - {fileID: 11400000, guid: 896973725e0a91c4ba052ead095efef2, type: 2}
+  - {fileID: 11400000, guid: 1f2fc88eedb0af740a7cea8c7bf54b78, type: 2}

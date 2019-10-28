@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f94550ce00353ba4eb1f58383b32cc2e, type: 3}
+  m_Name: Phase2
+  m_EditorClassIdentifier: 
+  phaseName: Prayer
+  majorTasks:
+  - {fileID: 11400000, guid: fa0be9e25d3945d47b190e4f2cd80644, type: 2}
+  - {fileID: 11400000, guid: 071535cbf967c334094607fe6cd5e7b4, type: 2}
+  - {fileID: 11400000, guid: 9b3145bfd9979bf4d97ba60bc00aeef0, type: 2}
+  - {fileID: 11400000, guid: 3f4028fecac372f4a9dcbe7e822ffaee, type: 2}
