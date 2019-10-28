@@ -17,8 +17,10 @@ public class NpcController : MonoBehaviour
     //Add Locations you want NPC to travel to.
     [SerializeField] List<GameObject> locations = new List<GameObject>();
     [SerializeField] bool randomlySelectLocations = false;
-    [SerializeField] float lookRadius = 5f;
+    [SerializeField] float suspciousRadius = 5f;
+    [SerializeField] float scaredRadius = 2f;
     [SerializeField] float speed;
+    [SerializeField] float slowSpeedMulti = 0.5f;
 
     //The min and max of these fields will be chosen by random during Action State.
     [SerializeField] float actionTimeSecMinimum = 3.0f;
@@ -26,6 +28,8 @@ public class NpcController : MonoBehaviour
 
     private State currentState;
     private int i = 0;
+    private Collider[] objectsAround;
+    private GameObject susObject;
 
     void Start()
     {
@@ -35,7 +39,8 @@ public class NpcController : MonoBehaviour
     
     void Update()
     {
-        print(currentState);
+        Debug.Log(currentState);
+        LookAround();
         switch(currentState)
         {
             case State.walking:
@@ -56,18 +61,36 @@ public class NpcController : MonoBehaviour
         }
     }
 
+    void LookAround()
+    {
+        objectsAround = Physics.OverlapSphere(GetComponent<Transform>().position, suspciousRadius);
+        for (int i = 0; i < objectsAround.Length; ++i)
+        {
+            if (currentState != State.suspicious && objectsAround[i].gameObject.CompareTag("possessed"))
+            {
+                currentState = State.suspicious;
+                susObject = objectsAround[i].gameObject;
+                break;
+            }
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, suspciousRadius);
+    }
+
     void WalkingUpdate()
     {
         transform.LookAt(locations[i].transform);
         float distance = Vector3.Distance(locations[i].transform.position, transform.position);
-        print("DISTANCE: "+ distance);
 
         if (distance > 1) //Not at Location
         {
-            print("walkin");
             transform.position = Vector3.MoveTowards(transform.position, locations[i].transform.position, speed);
         }
-        else //At Loc. NPC will perform action
+        else //At Location. NPC will perform action
         {
             StartCoroutine("DoAction");
         }
@@ -89,16 +112,26 @@ public class NpcController : MonoBehaviour
 
     void ActionUpdate()
     {
-        //Animations / indicating the User they're distracted
+        //Animations / indicating the User they're distracted.
     }
 
     void SuspiciousUpdate()
     {
+        transform.LookAt(susObject.transform);
+        float distance = Vector3.Distance(susObject.transform.position, transform.position);
 
+        if (distance > scaredRadius) //Not Scared yet
+        {
+            transform.position = Vector3.MoveTowards(transform.position, susObject.transform.position, speed * slowSpeedMulti);
+        }
+        else
+        {
+            currentState = State.scared;
+        }
     }
 
     void ScaredUpdate()
     {
-
+        print("I'm Scared!!");
     }
 }
