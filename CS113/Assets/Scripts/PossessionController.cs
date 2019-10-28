@@ -14,7 +14,6 @@ public class PossessionController : MonoBehaviour
     private Animator m_animator;
     private Rigidbody m_rigidBody;
 
-    private Vector3 prevRotation;
     private float m_currentV = 0;
     private float m_currentH = 0;
 
@@ -37,23 +36,18 @@ public class PossessionController : MonoBehaviour
     {
         m_animator = GetComponent<Animator>();
         m_rigidBody = GetComponent<Rigidbody>();
+        player.transform.parent = transform;
     }
 
     void Update()
     {
-        if (transform.childCount == 0)
-            player.transform.parent = transform;
-
-        if (transform.GetChild(0).gameObject.tag == "Player")
+        if (transform.GetChild(0).gameObject.tag == "Player" && transform.childCount == 1)
         {
-            if (Input.GetKey(KeyCode.Space))
-                PossessObject();            
+            if (Input.GetKey(KeyCode.F))
+                PossessObject();
         }
-        else if (transform.childCount != 0 && transform.GetChild(0).gameObject.tag != "Player" && Input.GetButtonUp("Jump"))
-        {
-            transform.GetChild(0).transform.parent = null;
-            transform.position = player.transform.position;
-        }
+        else if (transform.childCount >= 1 && Input.GetKeyDown(KeyCode.F))
+            ReleaseObject();                 
 
         Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * m_viewDistance, Color.red, 0.1f);
 
@@ -62,16 +56,25 @@ public class PossessionController : MonoBehaviour
     }
 
     void PossessObject()
-    {      
+    {
+        Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * m_viewDistance, Color.red, 0.1f);
         if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, out vision, m_viewDistance))
         {
             if (vision.collider.tag == "Object")
             {
-                player.transform.parent = null;
-                transform.position = vision.collider.gameObject.transform.position;
+                transform.GetChild(0).gameObject.SetActive(false);
+                transform.position = new Vector3(vision.collider.gameObject.transform.position.x, 0, vision.collider.gameObject.transform.position.z);
                 vision.collider.gameObject.transform.parent = transform;
             }
         }
+    }
+
+    void ReleaseObject()
+    {
+        Debug.Log("Child released.");
+        transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(1).transform.parent = null;
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
 
     private void Move()
