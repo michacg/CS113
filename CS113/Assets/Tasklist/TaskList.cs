@@ -21,49 +21,56 @@ public class TaskList : MonoBehaviour
 
     public void SetupGrid(List<MajorTask> majorTasks)
     {
+        float yVal = 0;
         for(int i = 0; i < majorTasks.Count; ++i )
         {
             GameObject t = Instantiate(MajorTaskPrefab, this.transform);
             MajTask ta = t.GetComponent<MajTask>();
-            ta.AssignTask(majorTasks[i].majorTaskName, majorTasks[i].tasksToComplete);
+            ta.gameObject.GetComponent<RectTransform>().anchoredPosition = Vector2.up * yVal;
+            yVal += ta.AssignTask(majorTasks[i].majorTaskName, majorTasks[i].tasksToComplete);
             tasksToComplete.Add(ta);
             MajorTaskIndex.Add(majorTasks[i].majorTaskName, i);
         }
     }
 
-    public void CompletedTask(string majorTask, int minorIndex)
+    public void CompletedTask(string majorTask, int minorIndex, System.Func<bool> tm)
     {
-        tasksToComplete[MajorTaskIndex[majorTask]].CompletedMinorTask(minorIndex);
+        tasksToComplete[MajorTaskIndex[majorTask]].CompletedMinorTask(minorIndex, tm, CompletedMajTask);
         if(tasksToComplete[MajorTaskIndex[majorTask]].isCompleted())
         {
             completedCount += 1;
-            if(completedCount == tasksToComplete.Count)
+            
+            if(completedCount >= tasksToComplete.Count)
             {
                 completed = true;
             }
         }
     }
+
+    bool CompletedMajTask()
+    {
+        completedCount += 1;
+        Debug.Log(completedCount);
+        if (completedCount >= tasksToComplete.Count)
+        {
+            completed = true;
+        }
+        return true;
+    }
+
 
     public bool isCompleted()
     {
         return completed;
     }
 
-    public void CompleteRandomTask()
+    public void CompleteRandomTask(System.Func<bool>tm)
     {
         int index = Random.Range(0, tasksToComplete.Count);
         while(tasksToComplete[index].isCompleted())
         {
             index = Random.Range(0, tasksToComplete.Count);
         }
-        tasksToComplete[index].CompleteRandomTask();
-        if (tasksToComplete[index].isCompleted())
-        {
-            completedCount += 1;
-            if (completedCount == tasksToComplete.Count)
-            {
-                completed = true;
-            }
-        }
+        tasksToComplete[index].CompleteRandomTask(tm, CompletedMajTask);
     }
 }

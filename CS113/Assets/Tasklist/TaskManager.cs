@@ -8,6 +8,7 @@ public class TaskManager : MonoBehaviour
 {
     public static TaskManager instance = null;
 
+    [SerializeField] float heightIncrease = 0.1f;
     [SerializeField] List<Phase> allTasks;
     [SerializeField] TextMeshProUGUI nameOfRoom;
     [SerializeField] Transform grid;
@@ -15,7 +16,13 @@ public class TaskManager : MonoBehaviour
 
     List<TaskList> taskLists;
 
+    RectTransform rt;
+
     int currentList = 0;
+
+    bool openingPanel = false;
+
+    float startingY;
 
     private void Awake()
     {
@@ -27,6 +34,8 @@ public class TaskManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rt = this.GetComponent<RectTransform>();
+        startingY = rt.anchoredPosition.y;
         taskLists = new List<TaskList>();
         SetupTasks();
         ChangeList(0);
@@ -47,17 +56,9 @@ public class TaskManager : MonoBehaviour
             room.gameObject.SetActive(false);
         }
     }
-
-    void ChangeList(int index)
-    {
-        taskLists[index].gameObject.SetActive(true);
-        nameOfRoom.text = allTasks[index].phaseName;
-        currentList = index;
-    }
-
     public void CompletedTask(string majorTaskName, int index)
     {
-        taskLists[currentList].CompletedTask(majorTaskName, index);
+        taskLists[currentList].CompletedTask(majorTaskName, index, CompletedFinishing);
         if(taskLists[currentList].isCompleted())
         {
             ChangeList(currentList + 1);
@@ -68,11 +69,54 @@ public class TaskManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            taskLists[currentList].CompleteRandomTask();
-            if (taskLists[currentList].isCompleted())
+            if(!openingPanel)
             {
-                ChangeList(currentList + 1);
+                StartCoroutine(BringUpPanel());
             }
         }
     }
+
+    bool CompletedFinishing()
+    {
+        StartCoroutine(BringDownPanel());
+        return true;
+    }
+
+    IEnumerator BringUpPanel()
+    {
+        openingPanel = true;
+        while(rt.anchoredPosition.y  < 0)
+        {
+            rt.anchoredPosition += (Vector2.up * heightIncrease * Time.deltaTime);
+            yield return null;
+        }
+        rt.anchoredPosition = Vector3.zero;
+        yield return new WaitForSeconds(0.2f);
+        taskLists[currentList].CompleteRandomTask(CompletedFinishing);
+    }
+
+    IEnumerator BringDownPanel()
+    {
+        while (rt.anchoredPosition.y > startingY)
+        {
+            rt.anchoredPosition -= (Vector2.up * heightIncrease * Time.deltaTime);
+            yield return null;
+        }
+        rt.anchoredPosition = Vector3.up * startingY;
+        if (taskLists[currentList].isCompleted())
+        {
+            ChangeList(1);
+        }
+        openingPanel = false;
+    }
+
+    void ChangeList(int index)
+    {
+        taskLists[index].gameObject.SetActive(true);
+        nameOfRoom.text = allTasks[index].phaseName;
+        currentList = index;
+    }
+
+
+
 }

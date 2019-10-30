@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 895620f558192144aa0f7b7be8b97a5b, type: 3}
+  m_Name: Tea
+  m_EditorClassIdentifier: 
+  majorTaskName: Tea
+  tasksToComplete:
+  - {fileID: 11400000, guid: c14035726edf282499026578a512ae38, type: 2}
+  - {fileID: 11400000, guid: db9f7baac9513e2409e39c945debe839, type: 2}
+  - {fileID: 11400000, guid: 3ffb9b1b12774644191fdca9717031ae, type: 2}

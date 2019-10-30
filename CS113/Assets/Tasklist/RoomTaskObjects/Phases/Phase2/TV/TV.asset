@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 895620f558192144aa0f7b7be8b97a5b, type: 3}
-  m_Name: Tea
+  m_Name: TV
   m_EditorClassIdentifier: 
-  majorTaskName: Tea
+  majorTaskName: Lunar New Year Show
   tasksToComplete:
-  - Turn on kettle
-  - Put leaves in
-  - Pour tea into teacups
+  - {fileID: 11400000, guid: 3f5d94ed56c39a7488373e5d9e219875, type: 2}
+  - {fileID: 11400000, guid: e17da1eda1ef919449f28117895c679d, type: 2}

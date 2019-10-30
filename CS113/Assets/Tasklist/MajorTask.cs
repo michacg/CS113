@@ -6,5 +6,5 @@ using UnityEngine;
 public class MajorTask : ScriptableObject
 {
     public string majorTaskName;
-    public List<string> tasksToComplete;
+    public List<MinorTask> tasksToComplete;
 }

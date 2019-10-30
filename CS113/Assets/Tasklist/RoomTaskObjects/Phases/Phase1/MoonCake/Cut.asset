@@ -9,12 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 895620f558192144aa0f7b7be8b97a5b, type: 3}
-  m_Name: Dumplings
+  m_Script: {fileID: 11500000, guid: 1922e7d3031871941a1bba62cf4e26b3, type: 3}
+  m_Name: Cut
   m_EditorClassIdentifier: 
-  majorTaskName: Dumplings
-  tasksToComplete:
-  - Move meat from fridge
-  - Roll out dough
-  - Bring flour
-  - Move dumplings to alter
+  MajorTaskName: MoonCake
+  task: Cut the mooncake

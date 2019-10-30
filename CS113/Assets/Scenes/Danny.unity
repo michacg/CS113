@@ -120,6 +120,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &79294741
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 79294743}
+  - component: {fileID: 79294742}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &79294742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79294741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20ac4cd72c2366a4ea7160252cc72de4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _task: {fileID: 0}
+--- !u!4 &79294743
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79294741}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 798.6698, y: 194.65335, z: -89.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &283233513
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,6 +657,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 797738841}
+  - component: {fileID: 797738842}
   m_Layer: 5
   m_Name: TaskList
   m_TagString: Untagged
@@ -637,10 +682,30 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -35.025}
-  m_SizeDelta: {x: 400, y: -69.95}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: -380}
+  m_SizeDelta: {x: 400, y: 380}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &797738842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 797738840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c86068fed8a84844929a5e1b1e1cb06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heightIncrease: 500
+  allTasks:
+  - {fileID: 11400000, guid: e232b680f511c334eb286f276cbcd44a, type: 2}
+  - {fileID: 11400000, guid: dcfacce8890ac2d458ddebc632c6b8ec, type: 2}
+  nameOfRoom: {fileID: 540361280}
+  grid: {fileID: 1623270266}
+  TaskListPrefab: {fileID: 2917334197750071848, guid: 6f0467e087a6e064085a99e55ac07837,
+    type: 3}
 --- !u!1 &891004559
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,7 +752,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1009540926}
-  - component: {fileID: 1009540927}
   m_Layer: 5
   m_Name: TaskPanel
   m_TagString: Untagged
@@ -716,25 +780,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1009540927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1009540925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c86068fed8a84844929a5e1b1e1cb06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allTasks:
-  - {fileID: 11400000, guid: e232b680f511c334eb286f276cbcd44a, type: 2}
-  - {fileID: 11400000, guid: dcfacce8890ac2d458ddebc632c6b8ec, type: 2}
-  nameOfRoom: {fileID: 540361280}
-  grid: {fileID: 1623270266}
-  TaskListPrefab: {fileID: 2917334197750071848, guid: 6f0467e087a6e064085a99e55ac07837,
-    type: 3}
 --- !u!1 &1398097450
 GameObject:
   m_ObjectHideFlags: 0
@@ -866,7 +911,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -31.00599}
+  m_AnchoredPosition: {x: 0, y: -31}
   m_SizeDelta: {x: 300, y: 318.04}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1896961978
