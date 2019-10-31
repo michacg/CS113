@@ -11,9 +11,10 @@ public class MajTask : MonoBehaviour
     [SerializeField] float lineInc = 100f;
     [SerializeField] GameObject minorTaskPrefab;
 
-    RectTransform rt; 
+    RectTransform rt;
 
-    List<MinTask> minorTasks;
+    Dictionary<MinorTask, MinTask> minorTasks;
+    //List<MinTask> minorTasks;
 
     bool completed = false;
 
@@ -22,7 +23,7 @@ public class MajTask : MonoBehaviour
     private void Awake()
     {
         rt = GetComponent<RectTransform>();
-        minorTasks = new List<MinTask>();
+        minorTasks = new Dictionary<MinorTask, MinTask>();
     }
 
     public float AssignTask(string majorTask, List<MinorTask> minorTasks)
@@ -38,30 +39,26 @@ public class MajTask : MonoBehaviour
         {
             GameObject mt = Instantiate(minorTaskPrefab, this.transform);
             MinTask m = mt.GetComponent<MinTask>();
-            minorTasks.Add(m);
+            minorTasks.Add(s, m);
             initialY -= m.AssignTask(s.task, initialY);
         }
         return initialY;
     }
 
-    public void CompletedMinorTask(int index, System.Func<bool> tm, System.Func<bool> tl)
+    public void CompletedMinorTask(MinorTask mTask, System.Func<bool> tm, System.Func<bool> tl)
     {
-        minorTasks[index].Completed(tm, tl, Completion);
-        ++completedCount;
-        if(completedCount >= minorTasks.Count)
-        {
-            completed = true;
-        }
+        if(!minorTasks[mTask].isCompleted())
+            minorTasks[mTask].Completed(tm, tl, Completion);
     }
 
     public void CompleteRandomTask(System.Func<bool> tm, System.Func<bool> tl)
     {
-        int index = Random.Range(0, minorTasks.Count);
-        while(minorTasks[index].isCompleted())
-        {
-            index = Random.Range(0, minorTasks.Count);
-        } 
-        minorTasks[index].Completed(tm, tl, Completion);
+       // int index = Random.Range(0, minorTasks.Count);
+       // while(minorTasks[index].isCompleted())
+       // {
+       //     index = Random.Range(0, minorTasks.Count);
+       // } 
+       // minorTasks[index].Completed(tm, tl, Completion);
     }
 
     bool Completion(System.Func<bool> tm, System.Func<bool> tl)
@@ -88,6 +85,15 @@ public class MajTask : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         tm();
 
+    }
+
+    public bool isMinorTaskCompleted(MinorTask mTask)
+    {
+        if(!completed)
+        {
+            return minorTasks[mTask].isCompleted();
+        }
+        return completed;
     }
 
     public bool isCompleted()

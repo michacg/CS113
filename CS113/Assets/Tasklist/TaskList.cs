@@ -29,28 +29,20 @@ public class TaskList : MonoBehaviour
             ta.gameObject.GetComponent<RectTransform>().anchoredPosition = Vector2.up * yVal;
             yVal += ta.AssignTask(majorTasks[i].majorTaskName, majorTasks[i].tasksToComplete);
             tasksToComplete.Add(ta);
+            Debug.Log(majorTasks[i].majorTaskName);
             MajorTaskIndex.Add(majorTasks[i].majorTaskName, i);
         }
     }
 
-    public void CompletedTask(string majorTask, int minorIndex, System.Func<bool> tm)
+    public void CompletedTask(string majorTask, MinorTask mTask, System.Func<bool> tm)
     {
-        tasksToComplete[MajorTaskIndex[majorTask]].CompletedMinorTask(minorIndex, tm, CompletedMajTask);
-        if(tasksToComplete[MajorTaskIndex[majorTask]].isCompleted())
-        {
-            completedCount += 1;
-            
-            if(completedCount >= tasksToComplete.Count)
-            {
-                completed = true;
-            }
-        }
+        if(!tasksToComplete[MajorTaskIndex[majorTask]].isMinorTaskCompleted(mTask))
+            tasksToComplete[MajorTaskIndex[majorTask]].CompletedMinorTask(mTask, tm, CompletedMajTask);
     }
 
     bool CompletedMajTask()
     {
         completedCount += 1;
-        Debug.Log(completedCount);
         if (completedCount >= tasksToComplete.Count)
         {
             completed = true;
@@ -58,19 +50,32 @@ public class TaskList : MonoBehaviour
         return true;
     }
 
-
     public bool isCompleted()
     {
         return completed;
     }
 
+    public bool isMinorTaskCompleted(string majorTaskName, MinorTask minTask)
+    {
+        Debug.Log("CHECKING KEYS IN DICTIONARY");
+        foreach(KeyValuePair<string, int> k in MajorTaskIndex)
+        {
+            Debug.Log(k.Key);
+        }
+        if(!completed)
+        {
+            return tasksToComplete[MajorTaskIndex[majorTaskName]].isMinorTaskCompleted(minTask);
+        }
+        return true;
+    }
+
     public void CompleteRandomTask(System.Func<bool>tm)
     {
-        int index = Random.Range(0, tasksToComplete.Count);
-        while(tasksToComplete[index].isCompleted())
-        {
-            index = Random.Range(0, tasksToComplete.Count);
-        }
-        tasksToComplete[index].CompleteRandomTask(tm, CompletedMajTask);
+        //int index = Random.Range(0, tasksToComplete.Count);
+        //while(tasksToComplete[index].isCompleted())
+        //{
+        //    index = Random.Range(0, tasksToComplete.Count);
+        //}
+        //tasksToComplete[index].CompleteRandomTask(tm, CompletedMajTask);
     }
 }

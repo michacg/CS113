@@ -12,6 +12,8 @@ public interface Completable
 {
     MinorTask task { get; set; }
     bool isCompleted { get; set; }
+    void InTargetVicinity(GameObject other);
+    void LeftTargetVicinity(GameObject other);
     void CheckForCompletion();
     
     

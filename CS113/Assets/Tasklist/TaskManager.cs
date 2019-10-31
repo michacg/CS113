@@ -24,26 +24,27 @@ public class TaskManager : MonoBehaviour
 
     float startingY;
 
+
     private void Awake()
     {
         if(instance == null)
         {
             instance = this;
         }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
         rt = this.GetComponent<RectTransform>();
         startingY = rt.anchoredPosition.y;
         taskLists = new List<TaskList>();
         SetupTasks();
         ChangeList(0);
     }
+    // Start is called before the first frame update
+    void Start()
+    {
+    }
 
     private void Update()
     {
-        FinishRandomTask();
+        //FinishRandomTask();
     }
 
     void SetupTasks()
@@ -56,25 +57,29 @@ public class TaskManager : MonoBehaviour
             room.gameObject.SetActive(false);
         }
     }
-    public void CompletedTask(string majorTaskName, int index)
+    public void CompletedTask(string majorTaskName, MinorTask minTask)
     {
-        taskLists[currentList].CompletedTask(majorTaskName, index, CompletedFinishing);
-        if(taskLists[currentList].isCompleted())
+        if (!openingPanel && !IfTaskLineCompleted(majorTaskName, minTask))
         {
-            ChangeList(currentList + 1);
+            StartCoroutine(BringUpPanel(majorTaskName, minTask));
         }
     }
 
-    void FinishRandomTask()
+    bool IfTaskLineCompleted(string majorTaskName, MinorTask minTask)
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            if(!openingPanel)
-            {
-                StartCoroutine(BringUpPanel());
-            }
-        }
+        return taskLists[currentList].isMinorTaskCompleted(majorTaskName, minTask);
     }
+
+    //void FinishRandomTask()
+    //{
+    //    if(Input.GetKeyDown(KeyCode.Space))
+    //    {
+    //        if(!openingPanel)
+    //        {
+    //            StartCoroutine(BringUpPanel());
+    //        }
+    //    }
+    //}
 
     bool CompletedFinishing()
     {
@@ -82,7 +87,7 @@ public class TaskManager : MonoBehaviour
         return true;
     }
 
-    IEnumerator BringUpPanel()
+    IEnumerator BringUpPanel(string majorTaskName, MinorTask minTask)
     {
         openingPanel = true;
         while(rt.anchoredPosition.y  < 0)
@@ -92,7 +97,7 @@ public class TaskManager : MonoBehaviour
         }
         rt.anchoredPosition = Vector3.zero;
         yield return new WaitForSeconds(0.2f);
-        taskLists[currentList].CompleteRandomTask(CompletedFinishing);
+        taskLists[currentList].CompletedTask(majorTaskName, minTask, CompletedFinishing);
     }
 
     IEnumerator BringDownPanel()
@@ -105,7 +110,7 @@ public class TaskManager : MonoBehaviour
         rt.anchoredPosition = Vector3.up * startingY;
         if (taskLists[currentList].isCompleted())
         {
-            ChangeList(1);
+            ChangeList(currentList + 1);
         }
         openingPanel = false;
     }
