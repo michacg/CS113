@@ -86,9 +86,11 @@ public class PossessionController : MonoBehaviour
         {
             if (objectsAround[i].gameObject.CompareTag("Object"))
             {
+                GameObject possessedObj = objectsAround[i].gameObject;
                 transform.GetChild(0).gameObject.SetActive(false);
-                transform.position = new Vector3(objectsAround[i].gameObject.transform.position.x, 0, objectsAround[i].gameObject.transform.position.z);
-                objectsAround[i].gameObject.transform.parent = transform;
+                transform.position = new Vector3(possessedObj.transform.position.x, 0, possessedObj.transform.position.z);
+                possessedObj.transform.parent = transform;
+                possessedObj.tag = "possessed";
                 break;
             }
         }
@@ -104,6 +106,7 @@ public class PossessionController : MonoBehaviour
     {
         Debug.Log("Child released.");
         transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(1).tag = "Object";
         transform.GetChild(1).transform.parent = null;
         transform.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
