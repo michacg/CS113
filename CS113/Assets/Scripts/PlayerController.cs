@@ -71,5 +71,7 @@ public class PlayerController : MonoBehaviour
             transform.position += m_currentDirection * m_moveSpeed * Time.deltaTime;
         }
 
+        
+
     }
 }

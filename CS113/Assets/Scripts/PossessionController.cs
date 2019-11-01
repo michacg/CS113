@@ -5,8 +5,9 @@ using UnityEngine;
 public class PossessionController : MonoBehaviour
 {
     [SerializeField] float m_moveSpeed = 2;
-    [SerializeField] float m_turnSpeed = 200;
-    [SerializeField] float m_jumpForce = 4;
+    //[SerializeField] float m_turnSpeed = 200;
+    [SerializeField] float m_floatHeight = 4.0f;
+    [SerializeField] float m_floatMultiplier = 0.1f;
     [SerializeField] float m_viewDistance = 4.0f;
 
     public GameObject player;
@@ -17,10 +18,12 @@ public class PossessionController : MonoBehaviour
     private float m_currentV = 0;
     private float m_currentH = 0;
 
+    private bool floatingUp = true;
+
     private readonly float m_interpolation = 10;
     private readonly float m_walkScale = 0.33f;
-    private readonly float m_backwardsWalkScale = 0.16f;
-    private readonly float m_backwardRunScale = 0.66f;
+/*    private readonly float m_backwardsWalkScale = 0.16f;
+    private readonly float m_backwardRunScale = 0.66f;*/
 
     private bool m_wasGrounded;
     private Vector3 m_currentDirection = Vector3.zero;
@@ -106,6 +109,36 @@ public class PossessionController : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(m_currentDirection);
             transform.position += m_currentDirection * m_moveSpeed * Time.deltaTime;
         }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            StartCoroutine("floatControl");
+        }
+
+    }
+
+    IEnumerator floatControl()
+    {
+        float height = transform.position.y;
+        
+        if (height < m_floatHeight && floatingUp)
+        {
+            transform.position = new Vector3(transform.position.x, height + m_floatMultiplier, transform.position.z);
+        }
+        else if (height >= m_floatHeight && floatingUp)
+        {
+            floatingUp = false;
+        }
+        
+        if (height > 0f && !floatingUp)
+        {
+            transform.position = new Vector3(transform.position.x, height - m_floatMultiplier, transform.position.z);
+        }
+        else if (height <= 0f && !floatingUp)
+        {
+            floatingUp = true;
+        }
+        yield return null;
 
     }
 }
