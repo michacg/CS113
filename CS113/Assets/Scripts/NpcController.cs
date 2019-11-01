@@ -12,6 +12,7 @@ public class NpcController : MonoBehaviour
         Action,
         suspicious,
         scared,
+        confused
     };
 
     //Add Locations you want NPC to travel to.
@@ -58,21 +59,38 @@ public class NpcController : MonoBehaviour
             case State.scared:
                 ScaredUpdate();
                 break;
+
+            case State.confused:
+                ConfusedUpdate();
+                break;
         }
     }
 
     void LookAround()
     {
+        if (currentState != State.suspicious && currentState != State.scared)
+        {
+            if (possessedObjIsAround())
+                currentState = State.suspicious;
+        }
+        else if ((currentState == State.suspicious || currentState == State.scared) && !possessedObjIsAround())
+        {
+            currentState = State.confused;
+        }
+    }
+
+    bool possessedObjIsAround()
+    {
         objectsAround = Physics.OverlapSphere(GetComponent<Transform>().position, suspciousRadius);
         for (int i = 0; i < objectsAround.Length; ++i)
         {
-            if (currentState != State.suspicious && objectsAround[i].gameObject.CompareTag("possessed"))
+            if (currentState != State.suspicious && currentState != State.scared && objectsAround[i].gameObject.CompareTag("possessed"))
             {
-                currentState = State.suspicious;
                 susObject = objectsAround[i].gameObject;
-                break;
+                return true;
             }
         }
+        return false;
     }
 
     void OnDrawGizmosSelected()
@@ -124,6 +142,10 @@ public class NpcController : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, susObject.transform.position, speed * slowSpeedMulti);
         }
+        else if (susObject == null)
+        {
+            print("howdy");
+        }
         else
         {
             currentState = State.scared;
@@ -132,6 +154,25 @@ public class NpcController : MonoBehaviour
 
     void ScaredUpdate()
     {
+        //animation for scared
+        //increase scare meter
         print("I'm Scared!!");
+    }
+
+    void ConfusedUpdate()
+    {
+        transform.LookAt(susObject.transform);
+        float distance = Vector3.Distance(susObject.transform.position, transform.position);
+
+        if (distance > scaredRadius) //Not Scared yet
+        {
+            transform.position = Vector3.MoveTowards(transform.position, susObject.transform.position, speed * slowSpeedMulti);
+        }
+        else
+        {
+            StartCoroutine("DoAction");
+            print("I'm confused!");
+            //animation for suspicion
+        }
     }
 }
