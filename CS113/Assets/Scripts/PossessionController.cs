@@ -47,11 +47,17 @@ public class PossessionController : MonoBehaviour
     {
         if (transform.GetChild(0).gameObject.tag == "Player" && transform.childCount == 1)
         {
-            if (Input.GetKey(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                print("possessing");
                 PossessObject();
+            }
+
         }
         else if (transform.childCount >= 1 && Input.GetKeyDown(KeyCode.F))
-            ReleaseObject();                 
+        {
+            ReleaseObject();
+        }
 
         //Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * m_viewDistance, Color.red, 0.1f);
 
