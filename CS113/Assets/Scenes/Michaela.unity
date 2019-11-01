@@ -709,6 +709,7 @@ MonoBehaviour:
   suspciousRadius: 5
   scaredRadius: 1
   speed: 3
+  slowSpeedMulti: 0.5
   actionTimeSecMinimum: 1
   actionTimeSecMaximum: 3
 --- !u!1 &1570845717
@@ -792,7 +793,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 473f05ac1c4c1b54aac68df1bf996ec4, type: 2}
+  - {fileID: 2100000, guid: a566bfa26616248499551acdb0cda8e0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

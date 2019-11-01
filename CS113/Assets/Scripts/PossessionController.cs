@@ -14,6 +14,7 @@ public class PossessionController : MonoBehaviour
 
     private Animator m_animator;
     private Rigidbody m_rigidBody;
+    private Collider[] objectsAround;
 
     private float m_currentV = 0;
     private float m_currentH = 0;
@@ -52,13 +53,13 @@ public class PossessionController : MonoBehaviour
         else if (transform.childCount >= 1 && Input.GetKeyDown(KeyCode.F))
             ReleaseObject();                 
 
-        Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * m_viewDistance, Color.red, 0.1f);
+        //Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * m_viewDistance, Color.red, 0.1f);
 
         Move();
         m_wasGrounded = m_isGrounded;
     }
 
-    void PossessObject()
+/*    void PossessObject()
     {
         Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * m_viewDistance, Color.red, 0.1f);
         if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, out vision, m_viewDistance))
@@ -70,6 +71,27 @@ public class PossessionController : MonoBehaviour
                 vision.collider.gameObject.transform.parent = transform;
             }
         }
+    }*/
+
+    void PossessObject()
+    {
+        objectsAround = Physics.OverlapSphere(GetComponent<Transform>().position, m_viewDistance);
+        for (int i = 0; i < objectsAround.Length; ++i)
+        {
+            if (objectsAround[i].gameObject.CompareTag("Object"))
+            {
+                transform.GetChild(0).gameObject.SetActive(false);
+                transform.position = new Vector3(objectsAround[i].gameObject.transform.position.x, 0, objectsAround[i].gameObject.transform.position.z);
+                objectsAround[i].gameObject.transform.parent = transform;
+                break;
+            }
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, m_viewDistance);
     }
 
     void ReleaseObject()
