@@ -19,12 +19,14 @@ public class NpcController : MonoBehaviour
     [SerializeField] List<GameObject> locations = new List<GameObject>();
 
     [SerializeField] bool randomlySelectLocations = false;
+
+
     [SerializeField] float suspciousRadius = 5f;
     [SerializeField] float scaredRadius = 2f;
     [SerializeField] float slowSpeedMulti = 0.5f;
+    [SerializeField] float speed;
 
-    public float speed;
-    public float scareMeterAdder = 1f;
+    private float npcMultiplier;
 
     //The min and max of these fields will be chosen by random during Action State.
     [SerializeField] float actionTimeSecMinimum = 3.0f;
@@ -44,6 +46,9 @@ public class NpcController : MonoBehaviour
     void Update()
     {
         Debug.Log(currentState);
+        
+        npcMultiplier = GameManager.instance.npcMultiplier;
+
         LookAround();
         switch(currentState)
         {
@@ -80,7 +85,7 @@ public class NpcController : MonoBehaviour
 
     bool possessedObjIsAround()
     {
-        objectsAround = Physics.OverlapSphere(GetComponent<Transform>().position, suspciousRadius);
+        objectsAround = Physics.OverlapSphere(GetComponent<Transform>().position, suspciousRadius * npcMultiplier);
         for (int i = 0; i < objectsAround.Length; ++i)
         {
             if (objectsAround[i].gameObject.CompareTag("possessed"))
@@ -95,7 +100,7 @@ public class NpcController : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, suspciousRadius);
+        Gizmos.DrawWireSphere(transform.position, suspciousRadius * npcMultiplier);
     }
 
     void WalkingUpdate()
@@ -105,7 +110,7 @@ public class NpcController : MonoBehaviour
 
         if (distance > 1) //Not at Location
         {
-            transform.position = Vector3.MoveTowards(transform.position, locations[i].transform.position, speed);
+            transform.position = Vector3.MoveTowards(transform.position, locations[i].transform.position, speed * npcMultiplier);
         }
         else //At Location. NPC will perform action
         {
