@@ -642,7 +642,7 @@ GameObject:
   - component: {fileID: 1016779021}
   - component: {fileID: 1016779027}
   m_Layer: 0
-  m_Name: NPC
+  m_Name: Mama
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -765,7 +765,6 @@ MonoBehaviour:
   scaredRadius: 1
   slowSpeedMulti: 0.5
   speed: 0.2
-  scareMeterAdder: 1
   actionTimeSecMinimum: 1
   actionTimeSecMaximum: 3
   currentState: 0
@@ -814,8 +813,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcList: []
   scareMeterAmount: 0
-  scareMeterAdder: 0.3
   coolDownSec: 5
+  scareMeterAdder: 0.3
+  multiplierValue: 2
+  npcMultiplier: 0
 --- !u!1 &1570845717
 GameObject:
   m_ObjectHideFlags: 0
