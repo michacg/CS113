@@ -17,17 +17,20 @@ public class NpcController : MonoBehaviour
 
     //Add Locations you want NPC to travel to.
     [SerializeField] List<GameObject> locations = new List<GameObject>();
+
     [SerializeField] bool randomlySelectLocations = false;
     [SerializeField] float suspciousRadius = 5f;
     [SerializeField] float scaredRadius = 2f;
-    [SerializeField] float speed;
     [SerializeField] float slowSpeedMulti = 0.5f;
+
+    public float speed;
+    public float scareMeterAdder = 1f;
 
     //The min and max of these fields will be chosen by random during Action State.
     [SerializeField] float actionTimeSecMinimum = 3.0f;
     [SerializeField] float actionTimeSecMaximum = 8.0f;
 
-    private State currentState;
+    public State currentState;
     private int i = 0;
     private Collider[] objectsAround;
     private GameObject susObject;
@@ -68,14 +71,10 @@ public class NpcController : MonoBehaviour
 
     void LookAround()
     {
-        if (currentState != State.suspicious && currentState != State.scared)
+        if (currentState != State.scared)
         {
             if (possessedObjIsAround())
                 currentState = State.suspicious;
-        }
-        else if ((currentState == State.suspicious || currentState == State.scared) && !possessedObjIsAround())
-        {
-            currentState = State.confused;
         }
     }
 
@@ -84,7 +83,7 @@ public class NpcController : MonoBehaviour
         objectsAround = Physics.OverlapSphere(GetComponent<Transform>().position, suspciousRadius);
         for (int i = 0; i < objectsAround.Length; ++i)
         {
-            if (currentState != State.suspicious && currentState != State.scared && objectsAround[i].gameObject.CompareTag("possessed"))
+            if (objectsAround[i].gameObject.CompareTag("possessed"))
             {
                 susObject = objectsAround[i].gameObject;
                 return true;
@@ -135,16 +134,18 @@ public class NpcController : MonoBehaviour
 
     void SuspiciousUpdate()
     {
+        if (!possessedObjIsAround())
+        {
+            currentState = State.confused;
+            return;
+        }
+
         transform.LookAt(susObject.transform);
         float distance = Vector3.Distance(susObject.transform.position, transform.position);
 
         if (distance > scaredRadius) //Not Scared yet
         {
             transform.position = Vector3.MoveTowards(transform.position, susObject.transform.position, speed * slowSpeedMulti);
-        }
-        else if (susObject == null)
-        {
-            print("howdy");
         }
         else
         {
@@ -154,9 +155,15 @@ public class NpcController : MonoBehaviour
 
     void ScaredUpdate()
     {
+        if (!possessedObjIsAround())
+        {
+            currentState = State.confused;
+            return;
+        }
         //animation for scared
         //increase scare meter
         print("I'm Scared!!");
+        GameManager.instance.IncreaseScareMeter();
     }
 
     void ConfusedUpdate()

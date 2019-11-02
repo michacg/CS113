@@ -5,7 +5,7 @@ using UnityEngine;
 public class PossessionController : MonoBehaviour
 {
     [SerializeField] float m_moveSpeed = 2;
-    //[SerializeField] float m_turnSpeed = 200;
+
     [SerializeField] float m_floatHeight = 4.0f;
     [SerializeField] float m_floatMultiplier = 0.1f;
     [SerializeField] float m_viewDistance = 4.0f;
@@ -23,18 +23,11 @@ public class PossessionController : MonoBehaviour
 
     private readonly float m_interpolation = 10;
     private readonly float m_walkScale = 0.33f;
-/*    private readonly float m_backwardsWalkScale = 0.16f;
-    private readonly float m_backwardRunScale = 0.66f;*/
 
-    private bool m_wasGrounded;
     private Vector3 m_currentDirection = Vector3.zero;
 
-    private RaycastHit vision;
+    //private RaycastHit vision;
 
-    private float m_jumpTimeStamp = 0;
-    private float m_minJumpInterval = 0.25f;
-
-    private bool m_isGrounded;
 
     void Start()
     {
@@ -62,7 +55,6 @@ public class PossessionController : MonoBehaviour
         //Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * m_viewDistance, Color.red, 0.1f);
 
         Move();
-        m_wasGrounded = m_isGrounded;
     }
 
 /*    void PossessObject()
