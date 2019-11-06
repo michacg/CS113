@@ -19,7 +19,7 @@ public class PlayerMeter : MonoBehaviour
     {
         scareMeter.Initialize();
         //StartCoroutine(addHealth());
-        scare = GetComponent<GameManager>().ins
+        scareMeter.CurrentVal = 100;
 
     }
 

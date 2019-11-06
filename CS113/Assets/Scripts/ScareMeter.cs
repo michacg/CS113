@@ -6,15 +6,16 @@ using UnityEngine.UI;
 public class ScareMeter : MonoBehaviour
 {
     public Sprite relax, content, alert;
+    int state = 0;
 
     private float fillAmount;
-
+    
     private float lerpSpeed = 2;
 
     [SerializeField]
     private Image meter; //Add text later? i.e. %% scare meter
 
-    private Image icon;
+    //private Image icon;
 
     public float MaxValue { get; set; }
 
@@ -36,7 +37,7 @@ public class ScareMeter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(relax);
+        //Debug.Log(relax);
         Handle();
     }
 
@@ -51,14 +52,17 @@ public class ScareMeter : MonoBehaviour
         {
 
             meter.GetComponent<Image>().overrideSprite = relax;
+            state = 0;
         }else if(meter.fillAmount <= 0.5 && meter.fillAmount > 0.25 &&
             meter.GetComponent<Image>().sprite != content)
         {
             meter.GetComponent<Image>().overrideSprite = content;
+            state = 1;
         }
         else if(meter.fillAmount <= 0.25 && meter.GetComponent<Image>().sprite != alert)
         {
             meter.GetComponent<Image>().overrideSprite = alert;
+            state = 2;
         }
 
     }
@@ -66,6 +70,11 @@ public class ScareMeter : MonoBehaviour
     private float ChangeVal(float value, float inMin, float inMax, float outMin, float outMax)
     {
         return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+    }
+
+    public int getType()
+    {
+        return state;
     }
     
 }

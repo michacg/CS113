@@ -6822,9 +6822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcc38ad34f43e4532acca8e19eb9a771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  temp: {fileID: 657356545}
-  temp2: {fileID: 675556354}
-  temp3: {fileID: 1297908693}
+  scare: {fileID: 2108968350}
   scareMeter:
     meter: {fileID: 1156084955}
     maxVal: 100
@@ -12826,6 +12824,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7321889246213183761, guid: 3b0842061fb0f184b937a9c795bbfce6,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7321889246213183761, guid: 3b0842061fb0f184b937a9c795bbfce6,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7693428402010188385, guid: 3b0842061fb0f184b937a9c795bbfce6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3b0842061fb0f184b937a9c795bbfce6, type: 3}
@@ -14190,6 +14198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 700219488}
+  - component: {fileID: 700219489}
   m_Layer: 0
   m_Name: Icon
   m_TagString: Untagged
@@ -14214,6 +14223,23 @@ Transform:
   m_Father: {fileID: 2020181148}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &700219489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700219487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49f5f01662a40446da13636db228151d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 1542781776}
+  relax: {fileID: 21300000, guid: 0e2bdd107fd004588b2053f7c24f3e58, type: 3}
+  content: {fileID: 21300000, guid: f64ee8e3a10bc4df78db66c2a9a03f41, type: 3}
+  alert: {fileID: 21300000, guid: cae955ac3da3d4542afb581dab5f74c5, type: 3}
+  meter: {fileID: 1156084955}
 --- !u!1001 &706266968
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23335,8 +23361,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e4a6e3bc6ab1438abfa1bfaf6666d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  relax: {fileID: 21300000, guid: 57cc79d42047142f3b1197310238fda1, type: 3}
+  content: {fileID: 21300000, guid: c78f6d0800448446ab4bae2ee7c0f2b4, type: 3}
+  alert: {fileID: 21300000, guid: df7d9df16fc134393ad2a74ba459b412, type: 3}
   meter: {fileID: 954195091}
-  icon: {fileID: 0}
 --- !u!4 &1156493085 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: d7c2652c128238c488fa7c80ff536222,
