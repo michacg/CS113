@@ -172,7 +172,7 @@ public class NpcController : MonoBehaviour
         //animation for scared
         //increase scare meter
         print("I'm Scared!!");
-        GameManager.instance.IncreaseScareMeter();
+        GameManager.instance.DecreaseScareMeter();
     }
 
     void ConfusedUpdate()

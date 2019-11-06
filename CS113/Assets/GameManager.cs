@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private bool multiplierOn = false;
     void Awake()
     {
+        StartCoroutine("RefillScareMeter");
         if (instance == null)
             instance = this;
 
@@ -33,20 +34,26 @@ public class GameManager : MonoBehaviour
             npcMultiplier = 1f;
 
         CheckScareMeter();
-
-        if (!scared && scareMeterAmount > 0f)
-            StartCoroutine("RefillScareMeter");
     }
 
     IEnumerator RefillScareMeter()
     {
-
-        scareMeterAmount += scareMeterAdder;
-        if (scareMeterAmount > 100f)
-            scareMeterAmount = 100f;
-
-        //needs fixing
-        yield return new WaitForSeconds(coolDownSec);
+        while (true)
+        {
+            if (scareMeterAmount < 100f)
+            {
+                scareMeterAmount += scareMeterAdder;
+                if (scareMeterAmount > 100f)
+                    scareMeterAmount = 100f;
+                yield return new WaitForSeconds(1);
+            }
+            else
+            {
+                yield return null;
+            }
+            
+        }
+            
     }
     
     void CheckScareMeter()
@@ -60,9 +67,8 @@ public class GameManager : MonoBehaviour
             multiplierOn = false;
         }
     }
-    public void IncreaseScareMeter()
+    public void DecreaseScareMeter()
     {
-        //foreach (GameObject npc in npcList)
         scared = true;
         scareMeterAmount -= scareMeterAdder;
         if (scareMeterAmount <= 0f)
