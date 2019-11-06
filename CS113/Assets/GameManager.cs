@@ -7,8 +7,9 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     [SerializeField] List<GameObject> npcList = new List<GameObject>();
     [SerializeField] float scareMeterAmount;
-    [SerializeField] float coolDownSec = 5f;
+    [SerializeField] float coolDownSec     = 5f;
     [SerializeField] float scareMeterAdder = 0.3f;
+    [SerializeField] float refillWaitSec   = 1f;
     [SerializeField] float multiplierValue = 2f;
 
     public float npcMultiplier;
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour
                 scareMeterAmount += scareMeterAdder;
                 if (scareMeterAmount > 100f)
                     scareMeterAmount = 100f;
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(refillWaitSec);
             }
             else
             {
