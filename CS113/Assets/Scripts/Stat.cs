@@ -1,18 +1,54 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System;
 
-public class Stat : MonoBehaviour
+[Serializable]
+public class Stat
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private ScareMeter meter;
+
+    [SerializeField]
+    private float maxVal;
+
+    [SerializeField]
+    private float currentVal;
+
+    public float CurrentVal
     {
-        
+        get
+        {
+            return currentVal;
+        }
+
+        set
+        {
+            this.currentVal = value;
+            meter.Value = currentVal;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public float MaxVal
     {
-        
+        get
+        {
+            return maxVal;
+        }
+
+        set
+        {
+            this.maxVal = value;
+            meter.MaxValue = maxVal;
+        }
     }
+
+    public void Initialize()
+    {
+        this.MaxVal = maxVal;
+        this.CurrentVal = currentVal;
+    }
+
+
 }
