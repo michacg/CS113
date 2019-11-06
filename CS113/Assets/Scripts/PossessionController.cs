@@ -7,7 +7,7 @@ public class PossessionController : MonoBehaviour
     [SerializeField] float m_moveSpeed = 2;
 
     [SerializeField] float m_floatHeight = 4.0f;
-    private float m_possessedFloatHeight = 0f;
+    private float m_possessedFloatMax = 0f;
     [SerializeField] float m_floatMultiplier = 0.1f;
     [SerializeField] float m_viewDistance = 4.0f;
 
@@ -67,7 +67,8 @@ public class PossessionController : MonoBehaviour
                 
                 main_camera.GetComponent<CameraController>().setTarget(possessedObj.transform);
                 m_rigidBody = transform.GetChild(1).gameObject.GetComponent<Rigidbody>();
-                m_possessedFloatHeight = m_floatHeight + transform.GetChild(1).position.y;
+                m_rigidBody.useGravity = false;
+                m_possessedFloatMax = m_floatHeight + transform.GetChild(1).position.y;
                 break;
             }
         }
@@ -83,6 +84,7 @@ public class PossessionController : MonoBehaviour
     {
         Debug.Log("Child released.");
         transform.GetChild(0).gameObject.SetActive(true);
+        m_rigidBody.useGravity = true;
         Transform item = transform.GetChild(1);
         item.tag = "Object";
         item.parent = null;
@@ -129,15 +131,20 @@ public class PossessionController : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && transform.childCount == 1)
         {
-            if (transform.childCount == 1)
+            StartCoroutine("floatControl");
+        }
+        else if (transform.childCount > 1)
+        {
+            if (Input.GetKey(KeyCode.Space))
             {
-                StartCoroutine("floatControl");
+                m_rigidBody.useGravity = false;
+                StartCoroutine("possessedFloatControl");
             }
             else
             {
-                StartCoroutine("possessedFloatControl");
+                m_rigidBody.useGravity = true;
             }
         }
 
@@ -172,7 +179,7 @@ public class PossessionController : MonoBehaviour
     {
         float height = transform.GetChild(1).position.y;
         
-        if (height < m_possessedFloatHeight)
+        if (height < m_possessedFloatMax)
         {
             m_rigidBody.MovePosition(new Vector3(transform.GetChild(1).position.x, height + m_floatMultiplier, transform.GetChild(1).position.z));
         }
