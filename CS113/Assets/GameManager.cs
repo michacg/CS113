@@ -80,5 +80,10 @@ public class GameManager : MonoBehaviour
         }
         
     }
+
+    public float getAmount()
+    {
+        return scareMeterAmount;
+    }
         
 }

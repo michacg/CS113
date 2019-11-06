@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class ScareMeter : MonoBehaviour
 {
-    Sprite relax = Resources.Load<Sprite>("Bar_Relax");
-    Sprite content = Resources.Load<Sprite>("Bar_Content");
-    Sprite alert = Resources.Load<Sprite>("Bar_Alert");
+    public Sprite relax, content, alert;
 
     private float fillAmount;
 
@@ -16,7 +14,6 @@ public class ScareMeter : MonoBehaviour
     [SerializeField]
     private Image meter; //Add text later? i.e. %% scare meter
 
-    [SerializeField]
     private Image icon;
 
     public float MaxValue { get; set; }
@@ -31,13 +28,15 @@ public class ScareMeter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         meter.fillAmount = 1;
-        meter.GetComponent<Image>().sprite = relax;
+        meter.GetComponent<Image>().overrideSprite = relax;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(relax);
         Handle();
     }
 
@@ -48,16 +47,18 @@ public class ScareMeter : MonoBehaviour
         meter.fillAmount = Mathf.Lerp(meter.fillAmount, fillAmount,
             Time.deltaTime * lerpSpeed);
         //}
-        if (meter.fillAmount > 0.5)
+        if (meter.fillAmount > 0.5 && meter.GetComponent<Image>().sprite != relax)
         {
-            meter.GetComponent<Image>().sprite = relax;
-        }else if(meter.fillAmount < 0.5 && meter.fillAmount > 0.25)
+
+            meter.GetComponent<Image>().overrideSprite = relax;
+        }else if(meter.fillAmount <= 0.5 && meter.fillAmount > 0.25 &&
+            meter.GetComponent<Image>().sprite != content)
         {
-            meter.GetComponent<Image>().sprite = content;
+            meter.GetComponent<Image>().overrideSprite = content;
         }
-        else
+        else if(meter.fillAmount <= 0.25 && meter.GetComponent<Image>().sprite != alert)
         {
-            meter.GetComponent<Image>().sprite = alert;
+            meter.GetComponent<Image>().overrideSprite = alert;
         }
 
     }

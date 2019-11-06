@@ -5,9 +5,8 @@ using UnityEngine;
 public class PlayerMeter : MonoBehaviour
 {
     [SerializeField]
-    public NpcController temp;
-    public NpcController temp2;
-    public NpcController temp3;
+    public GameObject scare;
+    //public GameManager scare;
 
     private Time timer;
 
@@ -19,31 +18,16 @@ public class PlayerMeter : MonoBehaviour
     private void Awake()
     {
         scareMeter.Initialize();
-        StartCoroutine(addHealth());
+        //StartCoroutine(addHealth());
+        scare = GetComponent<GameManager>().ins
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (checkSus())
-        {
-            scareMeter.CurrentVal -= 10f;
-        }
+        scareMeter.CurrentVal = scare.GetComponent<GameManager>().getAmount();
 
-    }
-
-    private bool checkSus()
-    {
-        
-        if(temp.currentState == NpcController.State.scared ||
-            temp2.currentState == NpcController.State.scared ||
-            temp3.currentState == NpcController.State.scared)
-        {
-            return true;
-        }
-
-        return false;
     }
 
     IEnumerator addHealth()
