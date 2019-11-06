@@ -33,7 +33,7 @@ public class NpcController : MonoBehaviour
     [SerializeField] float actionTimeSecMaximum = 8.0f;
 
     public State currentState;
-    private int i = 0;
+    private int i = 0; //iterator for locations
     private Collider[] objectsAround;
     private GameObject susObject;
 
@@ -45,7 +45,8 @@ public class NpcController : MonoBehaviour
     
     void Update()
     {
-        Debug.Log(currentState);
+        Debug.Log("Current State" + currentState);
+        Debug.Log("Location " + locations[i]);
         
         npcMultiplier = GameManager.instance.npcMultiplier;
 
@@ -106,11 +107,14 @@ public class NpcController : MonoBehaviour
     void WalkingUpdate()
     {
         transform.LookAt(locations[i].transform);
-        float distance = Vector3.Distance(locations[i].transform.position, transform.position);
+
+        Vector3 nextLoc = new Vector3(locations[i].transform.position.x, transform.position.y, locations[i].transform.position.z);
+
+        float distance = Vector3.Distance(nextLoc, transform.position);
 
         if (distance > 1) //Not at Location
         {
-            transform.position = Vector3.MoveTowards(transform.position, locations[i].transform.position, speed * npcMultiplier);
+            transform.position = Vector3.MoveTowards(transform.position, nextLoc, speed * npcMultiplier);
         }
         else //At Location. NPC will perform action
         {
