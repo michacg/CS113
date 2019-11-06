@@ -7,10 +7,12 @@ public class PossessionController : MonoBehaviour
     [SerializeField] float m_moveSpeed = 2;
 
     [SerializeField] float m_floatHeight = 4.0f;
+    private float m_possessedFloatHeight = 0f;
     [SerializeField] float m_floatMultiplier = 0.1f;
     [SerializeField] float m_viewDistance = 4.0f;
 
     public GameObject player;
+    public GameObject main_camera;
 
     private Animator m_animator;
     private Rigidbody m_rigidBody;
@@ -32,7 +34,7 @@ public class PossessionController : MonoBehaviour
     void Start()
     {
         m_animator = GetComponent<Animator>();
-        m_rigidBody = GetComponent<Rigidbody>();
+        //m_rigidBody = GetComponent<Rigidbody>();
         player.transform.parent = transform;
     }
 
@@ -83,6 +85,10 @@ public class PossessionController : MonoBehaviour
                 transform.position = new Vector3(possessedObj.transform.position.x, 0, possessedObj.transform.position.z);
                 possessedObj.transform.parent = transform;
                 possessedObj.tag = "possessed";
+                
+                main_camera.GetComponent<CameraController>().setTarget(possessedObj.transform);
+                m_rigidBody = transform.GetChild(1).gameObject.GetComponent<Rigidbody>();
+                m_possessedFloatHeight = m_floatHeight + transform.GetChild(1).position.y;
                 break;
             }
         }
@@ -98,9 +104,12 @@ public class PossessionController : MonoBehaviour
     {
         Debug.Log("Child released.");
         transform.GetChild(0).gameObject.SetActive(true);
-        transform.GetChild(1).tag = "Object";
-        transform.GetChild(1).transform.parent = null;
-        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        Transform item = transform.GetChild(1);
+        item.tag = "Object";
+        item.parent = null;
+        //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        transform.position = new Vector3(item.position.x, 0, item.position.z);
+        main_camera.GetComponent<CameraController>().setTarget(gameObject.transform);
     }
 
     private void Move()
@@ -128,14 +137,29 @@ public class PossessionController : MonoBehaviour
         if (direction != Vector3.zero)
         {
             m_currentDirection = Vector3.Slerp(m_currentDirection, direction, Time.deltaTime * m_interpolation);
-
-            transform.rotation = Quaternion.LookRotation(m_currentDirection);
-            transform.position += m_currentDirection * m_moveSpeed * Time.deltaTime;
+            
+            if (transform.childCount == 1)
+            {
+                transform.rotation = Quaternion.LookRotation(m_currentDirection);
+                transform.position += m_currentDirection * m_moveSpeed * Time.deltaTime;
+            }
+            else
+            {
+                m_rigidBody.MoveRotation(Quaternion.LookRotation(m_currentDirection));
+                m_rigidBody.MovePosition(transform.GetChild(1).position+(m_currentDirection * m_moveSpeed * Time.deltaTime));
+            }
         }
 
         if (Input.GetKey(KeyCode.Space))
         {
-            StartCoroutine("floatControl");
+            if (transform.childCount == 1)
+            {
+                StartCoroutine("floatControl");
+            }
+            else
+            {
+                StartCoroutine("possessedFloatControl");
+            }
         }
 
     }
@@ -160,6 +184,18 @@ public class PossessionController : MonoBehaviour
         else if (height <= 0f && !floatingUp)
         {
             floatingUp = true;
+        }
+        yield return null;
+
+    }
+    
+    IEnumerator possessedFloatControl()
+    {
+        float height = transform.GetChild(1).position.y;
+        
+        if (height < m_possessedFloatHeight)
+        {
+            m_rigidBody.MovePosition(new Vector3(transform.GetChild(1).position.x, height + m_floatMultiplier, transform.GetChild(1).position.z));
         }
         yield return null;
 

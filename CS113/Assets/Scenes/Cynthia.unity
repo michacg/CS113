@@ -24430,6 +24430,7 @@ MonoBehaviour:
   m_floatMultiplier: 0.1
   m_viewDistance: 4
   player: {fileID: 330672531}
+  main_camera: {fileID: 1618993129}
 --- !u!4 &1252267196
 Transform:
   m_ObjectHideFlags: 0

@@ -23,4 +23,9 @@ public class CameraController : MonoBehaviour
         transform.position = target.position - offset * zoom;
         transform.LookAt(target.position + Vector3.up * pitch);
     }
+    
+    public void setTarget(Transform t)
+    {
+        target = t;
+    }
 }
