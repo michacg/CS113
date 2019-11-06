@@ -28,13 +28,9 @@ public class PossessionController : MonoBehaviour
 
     private Vector3 m_currentDirection = Vector3.zero;
 
-    //private RaycastHit vision;
-
-
     void Start()
     {
         m_animator = GetComponent<Animator>();
-        //m_rigidBody = GetComponent<Rigidbody>();
         player.transform.parent = transform;
     }
 
@@ -53,25 +49,8 @@ public class PossessionController : MonoBehaviour
         {
             ReleaseObject();
         }
-
-        //Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * m_viewDistance, Color.red, 0.1f);
-
         Move();
     }
-
-/*    void PossessObject()
-    {
-        Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.forward * m_viewDistance, Color.red, 0.1f);
-        if (Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, out vision, m_viewDistance))
-        {
-            if (vision.collider.tag == "Object")
-            {
-                transform.GetChild(0).gameObject.SetActive(false);
-                transform.position = new Vector3(vision.collider.gameObject.transform.position.x, 0, vision.collider.gameObject.transform.position.z);
-                vision.collider.gameObject.transform.parent = transform;
-            }
-        }
-    }*/
 
     void PossessObject()
     {

@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
         if (instance == null)
             instance = this;
 
-        scareMeterAmount = 0f;
+        scareMeterAmount = 100f;
         npcMultiplier    = 1f;
     }
 
@@ -41,9 +41,9 @@ public class GameManager : MonoBehaviour
     IEnumerator RefillScareMeter()
     {
 
-        scareMeterAmount -= scareMeterAdder;
-        if (scareMeterAmount < 0f)
-            scareMeterAmount = 0f;
+        scareMeterAmount += scareMeterAdder;
+        if (scareMeterAmount > 100f)
+            scareMeterAmount = 100f;
 
         //needs fixing
         yield return new WaitForSeconds(coolDownSec);
@@ -51,11 +51,11 @@ public class GameManager : MonoBehaviour
     
     void CheckScareMeter()
     {
-        if (scareMeterAmount >= 100f)
+        if (scareMeterAmount <= 0f)
         {
             multiplierOn = true;
         }
-        if (multiplierOn && scareMeterAmount == 0)
+        if (multiplierOn && scareMeterAmount == 100f)
         {
             multiplierOn = false;
         }
@@ -64,9 +64,9 @@ public class GameManager : MonoBehaviour
     {
         //foreach (GameObject npc in npcList)
         scared = true;
-        scareMeterAmount += scareMeterAdder;
-        if (scareMeterAmount > 100f)
-            scareMeterAmount = 100f;
+        scareMeterAmount -= scareMeterAdder;
+        if (scareMeterAmount <= 0f)
+            scareMeterAmount  = 0f;
 
         StartCoroutine("TriggerScaredBool");
     }
