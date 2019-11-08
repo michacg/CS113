@@ -19,6 +19,12 @@ public class ScareMeter : MonoBehaviour
 
     public float MaxValue { get; set; }
 
+    [SerializeField]
+    public GameObject scare;
+
+    [SerializeField]
+    private Stat scareMeter;
+
     public float Value
     {
         set
@@ -32,12 +38,16 @@ public class ScareMeter : MonoBehaviour
 
         meter.fillAmount = 1;
         meter.GetComponent<Image>().overrideSprite = relax;
+
+        scareMeter.Initialize();
+        scareMeter.CurrentVal = 100;
     }
 
     // Update is called once per frame
     void Update()
     {
         //Debug.Log(relax);
+        scareMeter.CurrentVal = scare.GetComponent<GameManager>().getAmount();
         Handle();
     }
 
