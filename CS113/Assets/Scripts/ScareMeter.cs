@@ -53,7 +53,8 @@ public class ScareMeter : MonoBehaviour
 
             meter.GetComponent<Image>().overrideSprite = relax;
             state = 0;
-        }else if(meter.fillAmount <= 0.5 && meter.fillAmount > 0.25 &&
+        }
+        else if(meter.fillAmount <= 0.5 && meter.fillAmount > 0.25 &&
             meter.GetComponent<Image>().sprite != content)
         {
             meter.GetComponent<Image>().overrideSprite = content;
