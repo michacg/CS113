@@ -10,6 +10,7 @@ public class PossessionController : MonoBehaviour
     private float m_possessedFloatMax = 0f;
     [SerializeField] float m_floatMultiplier = 0.1f;
     [SerializeField] float m_viewDistance = 4.0f;
+    [SerializeField] KeyCode actionButton;
 
     public GameObject player;
     public GameObject main_camera;
@@ -50,6 +51,7 @@ public class PossessionController : MonoBehaviour
             ReleaseObject();
         }
         Move();
+        UseItem();
     }
 
     void PossessObject()
@@ -148,6 +150,18 @@ public class PossessionController : MonoBehaviour
             }
         }
 
+    }
+
+    void UseItem()
+    {
+        if(transform.childCount > 1 && Input.GetKeyDown(actionButton))
+        {
+            Completable c = transform.GetChild(1).GetComponent<Completable>();
+            if(c != null)
+            {
+                c.CheckForCompletion();
+            }
+        }
     }
 
     IEnumerator floatControl()
