@@ -2016,7 +2016,9 @@ MonoBehaviour:
   m_floatHeight: 4
   m_floatMultiplier: 0.1
   m_viewDistance: 4
+  actionButton: 102
   player: {fileID: 1948294759}
+  main_camera: {fileID: 1041590096}
 --- !u!4 &1809038481
 Transform:
   m_ObjectHideFlags: 0
