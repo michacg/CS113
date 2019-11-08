@@ -14850,8 +14850,8 @@ MonoBehaviour:
   - {fileID: 937228185}
   - {fileID: 539270657}
   randomlySelectLocations: 0
-  suspciousRadius: 5
-  scaredRadius: 1
+  suspciousRadius: 6
+  scaredRadius: 2
   slowSpeedMulti: 0.5
   speed: 0.2
   actionTimeSecMinimum: 1
@@ -14866,7 +14866,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 657356544}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 3
+  m_Radius: 2
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -15411,8 +15411,8 @@ MonoBehaviour:
   - {fileID: 1393095922}
   - {fileID: 1345593040}
   randomlySelectLocations: 0
-  suspciousRadius: 5
-  scaredRadius: 1
+  suspciousRadius: 6
+  scaredRadius: 2
   slowSpeedMulti: 0.5
   speed: 0.2
   actionTimeSecMinimum: 1
@@ -15427,7 +15427,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 675556353}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 3
+  m_Radius: 2
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -27975,8 +27975,8 @@ MonoBehaviour:
   - {fileID: 837931708}
   - {fileID: 1273920271}
   randomlySelectLocations: 0
-  suspciousRadius: 5
-  scaredRadius: 1
+  suspciousRadius: 6
+  scaredRadius: 2
   slowSpeedMulti: 0.5
   speed: 0.2
   actionTimeSecMinimum: 1
@@ -27991,7 +27991,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1297908692}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 3
+  m_Radius: 2
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
