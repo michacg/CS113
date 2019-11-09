@@ -20,9 +20,6 @@ public class ScareMeter : MonoBehaviour
     public float MaxValue { get; set; }
 
     [SerializeField]
-    public GameObject scare;
-
-    [SerializeField]
     private Stat scareMeter;
 
     public float Value
@@ -47,7 +44,7 @@ public class ScareMeter : MonoBehaviour
     void Update()
     {
         //Debug.Log(relax);
-        scareMeter.CurrentVal = scare.GetComponent<GameManager>().getAmount();
+        scareMeter.CurrentVal = GameManager.instance.getAmount();
         Handle();
     }
 
