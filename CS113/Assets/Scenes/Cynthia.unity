@@ -7549,23 +7549,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &330672536
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330672531}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcc38ad34f43e4532acca8e19eb9a771, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scare: {fileID: 2108968350}
-  scareMeter:
-    meter: {fileID: 1156084955}
-    maxVal: 100
-    currentVal: 100
 --- !u!1001 &332900632
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25959,7 +25942,7 @@ MonoBehaviour:
   content: {fileID: 21300000, guid: c78f6d0800448446ab4bae2ee7c0f2b4, type: 3}
   alert: {fileID: 21300000, guid: df7d9df16fc134393ad2a74ba459b412, type: 3}
   meter: {fileID: 954195091}
-  scare: {fileID: 0}
+  scare: {fileID: 2108968350}
   scareMeter:
     meter: {fileID: 1156084955}
     maxVal: 100
