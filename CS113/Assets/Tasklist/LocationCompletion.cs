@@ -29,7 +29,7 @@ public class LocationCompletion : MonoBehaviour, Completable
     {
         if(reachedTarget)
         {
-            TaskManager.instance.CompletedTask(task.MajorTaskName, task);
+            //TaskManager.instance.CompletedTask(task.MajorTaskName, task);
         }
     }
 }

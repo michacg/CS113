@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MinorTask", menuName = "MinorTask")]
 public class MinorTask : ScriptableObject
 {
+    public int phase;
     public string MajorTaskName;
     public string task;
 

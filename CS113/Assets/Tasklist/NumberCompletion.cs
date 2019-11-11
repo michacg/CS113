@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum CompletionLocation
-{
-    SINGLE,
-    MULTIPLE
-}
-
-
 public class NumberCompletion : MonoBehaviour, Completable
 {
     [SerializeField] MinorTask _task;
@@ -17,7 +10,7 @@ public class NumberCompletion : MonoBehaviour, Completable
 
     [SerializeField] List<GameObject> targetLocations;
     [SerializeField] int NumberOfActions;
-    [SerializeField] CompletionLocation loc;
+    //[SerializeField] CompletionLocation loc;
 
     int actionsRemaining;
 
@@ -40,20 +33,23 @@ public class NumberCompletion : MonoBehaviour, Completable
     public void LeftTargetVicinity(GameObject other)
     {
         if (targetLocations.Contains(other))
+        {
+
             reachedTarget = false;
+        }
     }
 
     public void CheckForCompletion()
     {
         if (reachedTarget)
         {
-            if (actionsRemaining <= 0)
-                TaskManager.instance.CompletedTask(task.MajorTaskName, task);
-            else
+            Debug.Log("HEYO");
+            //if (loc == CompletionLocation.MULTIPLE)
+            //    Destroy(target);
+            actionsRemaining -= 1;
+            if(actionsRemaining == 0)
             {
-                if(loc == CompletionLocation.MULTIPLE)
-                    targetLocations.Remove(target);
-                actionsRemaining -= 1;
+                //TaskManager.instance.CompletedTask(task.MajorTaskName, task);
             }
         }
     }

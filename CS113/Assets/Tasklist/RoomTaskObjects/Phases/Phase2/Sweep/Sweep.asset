@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   majorTaskName: Clean House
   tasksToComplete:
-  - {fileID: 11400000, guid: a174fe56b4afa5c41b86553c716f61cf, type: 2}
   - {fileID: 11400000, guid: a787713c07ba8ab48aad1a0011d90b95, type: 2}

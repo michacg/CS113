@@ -156,6 +156,7 @@ public class PossessionController : MonoBehaviour
     {
         if(transform.childCount > 1 && Input.GetKeyDown(actionButton))
         {
+            Debug.Log("hi");
             Completable c = transform.GetChild(1).GetComponent<Completable>();
             if(c != null)
             {

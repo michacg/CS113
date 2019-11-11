@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1922e7d3031871941a1bba62cf4e26b3, type: 3}
   m_Name: Kettle
   m_EditorClassIdentifier: 
+  phase: 1
   MajorTaskName: Tea
   task: Turn on kettle

@@ -9,7 +9,7 @@ public class CompletionVicinity : MonoBehaviour
         Completable c = other.gameObject.GetComponent<Completable>();
         if (c != null)
         {
-            c.InTargetVicinity(this.gameObject);
+            c.InTargetVicinity(this.transform.parent.gameObject);
         }
     }
 
@@ -18,7 +18,7 @@ public class CompletionVicinity : MonoBehaviour
         Completable c = other.gameObject.GetComponent<Completable>();
         if (c != null)
         {
-            c.LeftTargetVicinity(this.gameObject);
+            c.LeftTargetVicinity(this.transform.parent.gameObject);
         }
     }
 

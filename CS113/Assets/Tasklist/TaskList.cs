@@ -29,7 +29,6 @@ public class TaskList : MonoBehaviour
             ta.gameObject.GetComponent<RectTransform>().anchoredPosition = Vector2.up * yVal;
             yVal += ta.AssignTask(majorTasks[i].majorTaskName, majorTasks[i].tasksToComplete);
             tasksToComplete.Add(ta);
-            Debug.Log(majorTasks[i].majorTaskName);
             MajorTaskIndex.Add(majorTasks[i].majorTaskName, i);
         }
     }
@@ -57,7 +56,6 @@ public class TaskList : MonoBehaviour
 
     public bool isMinorTaskCompleted(string majorTaskName, MinorTask minTask)
     {
-        Debug.Log("CHECKING KEYS IN DICTIONARY");
         foreach(KeyValuePair<string, int> k in MajorTaskIndex)
         {
             Debug.Log(k.Key);

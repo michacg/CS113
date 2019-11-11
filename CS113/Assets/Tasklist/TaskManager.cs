@@ -54,20 +54,21 @@ public class TaskManager : MonoBehaviour
             GameObject room = Instantiate(TaskListPrefab, grid);
             room.GetComponent<TaskList>().SetupGrid(allTasks[i].majorTasks);
             taskLists.Add(room.GetComponent<TaskList>());
-            room.gameObject.SetActive(false);
         }
     }
-    public void CompletedTask(string majorTaskName, MinorTask minTask)
+    public void CompletedTask(int phase, string majorTaskName, MinorTask minTask)
     {
-        if (!openingPanel && !IfTaskLineCompleted(majorTaskName, minTask))
+        phase -= 1;
+        if (!openingPanel && !IfTaskLineCompleted(phase, majorTaskName, minTask))
         {
-            StartCoroutine(BringUpPanel(majorTaskName, minTask));
+            StartCoroutine(BringUpPanel(phase, majorTaskName, minTask));
         }
     }
 
-    bool IfTaskLineCompleted(string majorTaskName, MinorTask minTask)
+    bool IfTaskLineCompleted(int phase, string majorTaskName, MinorTask minTask)
     {
-        return taskLists[currentList].isMinorTaskCompleted(majorTaskName, minTask);
+        Debug.Log(phase + " " + minTask.name);
+        return taskLists[phase].isMinorTaskCompleted(majorTaskName, minTask);
     }
 
     //void FinishRandomTask()
@@ -87,8 +88,9 @@ public class TaskManager : MonoBehaviour
         return true;
     }
 
-    IEnumerator BringUpPanel(string majorTaskName, MinorTask minTask)
+    IEnumerator BringUpPanel(int phase, string majorTaskName, MinorTask minTask)
     {
+        ChangeList(phase);
         openingPanel = true;
         while(rt.anchoredPosition.y  < 0)
         {
@@ -117,7 +119,7 @@ public class TaskManager : MonoBehaviour
 
     void ChangeList(int index)
     {
-        taskLists[index].gameObject.SetActive(true);
+        taskLists[index].gameObject.transform.SetAsLastSibling();
         nameOfRoom.text = allTasks[index].phaseName;
         currentList = index;
     }
