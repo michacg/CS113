@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: MoveKnife
   m_EditorClassIdentifier: 
   task: {fileID: 11400000, guid: 5494dd8c3feb4c64b9547383d2205b02, type: 2}
-  NumberOfActions: 1
+  actionsToPerform: 1
+  NumberOfActions: 0
   type: 0

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: CutMooncake
   m_EditorClassIdentifier: 
   task: {fileID: 11400000, guid: 79b498c9501521d43a767e9a4a640b7b, type: 2}
-  NumberOfActions: 4
+  actionsToPerform: 4
+  NumberOfActions: 0
   type: 1

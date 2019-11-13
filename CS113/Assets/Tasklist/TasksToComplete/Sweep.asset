@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Sweep
   m_EditorClassIdentifier: 
   task: {fileID: 11400000, guid: a787713c07ba8ab48aad1a0011d90b95, type: 2}
-  NumberOfActions: 4
+  actionsToPerform: 4
+  NumberOfActions: 0
   type: 2
