@@ -14812,7 +14812,6 @@ GameObject:
   - component: {fileID: 657356547}
   - component: {fileID: 657356546}
   - component: {fileID: 657356545}
-  - component: {fileID: 657356551}
   m_Layer: 0
   m_Name: Mama
   m_TagString: Untagged
@@ -14855,7 +14854,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 657356544}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 3
+  m_Radius: 2
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -14941,22 +14940,6 @@ Transform:
   m_Father: {fileID: 917965047}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &657356551
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 657356544}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 116
-  m_CollisionDetection: 0
 --- !u!1001 &664929225
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29383,7 +29366,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 8.357, y: 2.127, z: 3.7480001}
+  m_Extents: {x: 8.357, y: 2.127, z: 0.00001}
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1
