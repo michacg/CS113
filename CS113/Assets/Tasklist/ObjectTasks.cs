@@ -26,7 +26,6 @@ public class ObjectTasks : MonoBehaviour, Completable
 
     public void InTargetVicinity(GameObject other)
     {
-        Debug.Log("HIHI");
         if (currentTask < tasksToComplete.Count)
         {
             actionsRemaining = tasksToComplete[currentTask].NumberOfActions;
@@ -46,6 +45,7 @@ public class ObjectTasks : MonoBehaviour, Completable
             if (locations.Contains(other))
             {
                 tasksToComplete[currentTask].NumberOfActions = actionsRemaining;
+                Debug.Log("leaving");
                 reachedTarget = false;
             }
         }
@@ -53,8 +53,7 @@ public class ObjectTasks : MonoBehaviour, Completable
 
     public void CheckForCompletion()
     {
-        Debug.Log("HOHO");
-        if (reachedTarget)
+        if (reachedTarget && currentTask < tasksToComplete.Count)
         {
             switch (tasksToComplete[currentTask].type)
             {
@@ -67,10 +66,15 @@ public class ObjectTasks : MonoBehaviour, Completable
                     break;
 
             }
-            if (actionsRemaining == 0)
+            tasksToComplete[currentTask].NumberOfActions = actionsRemaining;
+            Debug.Log(actionsRemaining);
+            if (actionsRemaining <= 0)
             {
+                if(currentTask + 1 < tasksToComplete.Count)
+                    actionsRemaining = tasksToComplete[currentTask+1].NumberOfActions;
                 TaskManager.instance.CompletedTask(tasksToComplete[currentTask].task.phase,tasksToComplete[currentTask].task.MajorTaskName, tasksToComplete[currentTask].task);
                 currentTask += 1;
+                Debug.Log(actionsRemaining);
             }
         }
     }

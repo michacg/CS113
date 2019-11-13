@@ -67,7 +67,6 @@ public class TaskManager : MonoBehaviour
 
     bool IfTaskLineCompleted(int phase, string majorTaskName, MinorTask minTask)
     {
-        Debug.Log(phase + " " + minTask.name);
         return taskLists[phase].isMinorTaskCompleted(majorTaskName, minTask);
     }
 

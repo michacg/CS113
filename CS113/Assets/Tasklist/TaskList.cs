@@ -56,10 +56,6 @@ public class TaskList : MonoBehaviour
 
     public bool isMinorTaskCompleted(string majorTaskName, MinorTask minTask)
     {
-        foreach(KeyValuePair<string, int> k in MajorTaskIndex)
-        {
-            Debug.Log(k.Key);
-        }
         if(!completed)
         {
             return tasksToComplete[MajorTaskIndex[majorTaskName]].isMinorTaskCompleted(minTask);
