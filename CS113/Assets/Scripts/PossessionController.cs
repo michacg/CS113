@@ -13,6 +13,7 @@ public class PossessionController : MonoBehaviour
     [SerializeField] KeyCode actionButton;
 
     public GameObject player;
+    public SkinnedMeshRenderer playerModel;
     public GameObject main_camera;
 
     private Animator m_animator;
@@ -42,25 +43,27 @@ public class PossessionController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
             {
                 print("possessing");
-                PossessObject();
+                StartCoroutine("PossessObject");
             }
 
         }
         else if (transform.childCount >= 1 && Input.GetKeyDown(KeyCode.F))
         {
+            StartCoroutine("possessFadeIn");
             ReleaseObject();
         }
         Move();
         UseItem();
-    }
+    }             
 
-    void PossessObject()
+    IEnumerator PossessObject()
     {
         objectsAround = Physics.OverlapSphere(GetComponent<Transform>().position, m_viewDistance);
         for (int i = 0; i < objectsAround.Length; ++i)
         {
             if (objectsAround[i].gameObject.CompareTag("Object"))
             {
+                yield return StartCoroutine("possessFadeOut");
                 GameObject possessedObj = objectsAround[i].gameObject;
                 transform.GetChild(0).gameObject.SetActive(false);
                 transform.position = new Vector3(possessedObj.transform.position.x, 0, possessedObj.transform.position.z);
@@ -199,5 +202,27 @@ public class PossessionController : MonoBehaviour
         }
         yield return null;
 
+    }
+
+    IEnumerator possessFadeOut()
+    {
+        for (float f = playerModel.material.GetFloat("_DistortionBlend"); f <= 1f; f += 0.05f)
+        {
+            yield return new WaitForSeconds(0.05f);
+            playerModel.material.SetFloat("_DistortionBlend", f);           
+        }
+
+        playerModel.material.SetFloat("_DistortionBlend", 1f);
+    }
+
+    IEnumerator possessFadeIn()
+    {
+        for (float f = playerModel.material.GetFloat("_DistortionBlend"); f >= 0.268f; f -= 0.03f)
+        {
+            yield return new WaitForSeconds(0.05f);
+            playerModel.material.SetFloat("_DistortionBlend", f);
+        }
+
+        playerModel.material.SetFloat("_DistortionBlend", 0.268f);
     }
 }
