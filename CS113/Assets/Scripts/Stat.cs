@@ -25,7 +25,7 @@ public class Stat
 
         set
         {
-            this.currentVal = value;
+            this.currentVal = Mathf.Clamp(value, 0, MaxVal);
             meter.Value = currentVal;
         }
     }
