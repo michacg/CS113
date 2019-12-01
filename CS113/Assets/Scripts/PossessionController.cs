@@ -24,6 +24,7 @@ public class PossessionController : MonoBehaviour
     private float m_currentH = 0;
 
     private bool floatingUp = true;
+    private bool moveLock = false;
 
     private readonly float m_interpolation = 10;
     private readonly float m_walkScale = 0.33f;
@@ -38,22 +39,25 @@ public class PossessionController : MonoBehaviour
 
     void Update()
     {
-        if (transform.GetChild(0).gameObject.tag == "Player" && transform.childCount == 1)
+        if (!moveLock)
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (transform.GetChild(0).gameObject.tag == "Player" && transform.childCount == 1)
             {
-                print("possessing");
-                StartCoroutine("PossessObject");
-            }
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    print("possessing");
+                    StartCoroutine("PossessObject");
+                }
 
+            }
+            else if (transform.childCount >= 1 && Input.GetKeyDown(KeyCode.F))
+            {
+                StartCoroutine("possessFadeIn");
+                ReleaseObject();
+            }
+            Move();
+            UseItem();
         }
-        else if (transform.childCount >= 1 && Input.GetKeyDown(KeyCode.F))
-        {
-            StartCoroutine("possessFadeIn");
-            ReleaseObject();
-        }
-        Move();
-        UseItem();
     }             
 
     IEnumerator PossessObject()
@@ -206,6 +210,8 @@ public class PossessionController : MonoBehaviour
 
     IEnumerator possessFadeOut()
     {
+        moveLock = true;
+
         for (float f = playerModel.material.GetFloat("_DistortionBlend"); f <= 1f; f += 0.05f)
         {
             yield return new WaitForSeconds(0.05f);
@@ -213,16 +219,22 @@ public class PossessionController : MonoBehaviour
         }
 
         playerModel.material.SetFloat("_DistortionBlend", 1f);
+
+        moveLock = false;
     }
 
     IEnumerator possessFadeIn()
     {
-        for (float f = playerModel.material.GetFloat("_DistortionBlend"); f >= 0.268f; f -= 0.03f)
+        moveLock = true;
+
+        for (float f = playerModel.material.GetFloat("_DistortionBlend"); f >= 0.268f; f -= 0.05f)
         {
             yield return new WaitForSeconds(0.05f);
             playerModel.material.SetFloat("_DistortionBlend", f);
         }
 
         playerModel.material.SetFloat("_DistortionBlend", 0.268f);
+
+        moveLock = false;
     }
 }
