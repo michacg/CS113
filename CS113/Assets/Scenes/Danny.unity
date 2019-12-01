@@ -1712,6 +1712,7 @@ MonoBehaviour:
   grid: {fileID: 1623270266}
   TaskListPrefab: {fileID: 2917334197750071848, guid: 6f0467e087a6e064085a99e55ac07837,
     type: 3}
+  TaskListButton: 112
 --- !u!1 &807811026
 GameObject:
   m_ObjectHideFlags: 0
@@ -3027,6 +3028,7 @@ MonoBehaviour:
   m_viewDistance: 4
   actionButton: 113
   player: {fileID: 1948294759}
+  playerModel: {fileID: 0}
   main_camera: {fileID: 1041590096}
 --- !u!4 &1809038481
 Transform:

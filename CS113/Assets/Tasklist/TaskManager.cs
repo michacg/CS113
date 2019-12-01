@@ -13,6 +13,7 @@ public class TaskManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI nameOfRoom;
     [SerializeField] Transform grid;
     [SerializeField] GameObject TaskListPrefab;
+    [SerializeField] KeyCode TaskListButton;
 
     List<TaskList> taskLists;
 
@@ -21,6 +22,8 @@ public class TaskManager : MonoBehaviour
     int currentList = 0;
 
     bool openingPanel = false;
+
+    bool open = false;
 
     float startingY;
 
@@ -44,7 +47,27 @@ public class TaskManager : MonoBehaviour
 
     private void Update()
     {
-        //FinishRandomTask();
+        BringUpTasks();
+    }
+
+    void BringUpTasks()
+    {
+        if (Input.GetKeyDown(TaskListButton))
+        {
+            if(!openingPanel)
+            {
+                if(open)
+                {
+                    StartCoroutine(BringDownPanel(true));
+                    open = false;
+                }
+                else
+                {
+                    StartCoroutine(OpenPanel());
+                    open = true;
+                }
+            }
+        }
     }
 
     void SetupTasks()
@@ -70,50 +93,68 @@ public class TaskManager : MonoBehaviour
         return taskLists[phase].isMinorTaskCompleted(majorTaskName, minTask);
     }
 
-    //void FinishRandomTask()
-    //{
-    //    if(Input.GetKeyDown(KeyCode.Space))
-    //    {
-    //        if(!openingPanel)
-    //        {
-    //            StartCoroutine(BringUpPanel());
-    //        }
-    //    }
-    //}
 
     bool CompletedFinishing()
     {
-        StartCoroutine(BringDownPanel());
+        StartCoroutine(BringDownPanel(true));
         return true;
     }
 
     IEnumerator BringUpPanel(int phase, string majorTaskName, MinorTask minTask)
     {
-        ChangeList(phase);
+            ChangeList(phase);
+            openingPanel = true;
+
+            while (rt.anchoredPosition.y < 0)
+            {
+                rt.anchoredPosition += (Vector2.up * heightIncrease * Time.deltaTime);
+                yield return null;
+            }
+            rt.anchoredPosition = Vector3.zero;
+            yield return new WaitForSeconds(0.2f);
+            taskLists[currentList].CompletedTask(majorTaskName, minTask, CompletedFinishing);
+    }
+
+    IEnumerator OpenPanel()
+    {
         openingPanel = true;
-        while(rt.anchoredPosition.y  < 0)
+
+        while (rt.anchoredPosition.y < 0)
         {
             rt.anchoredPosition += (Vector2.up * heightIncrease * Time.deltaTime);
             yield return null;
         }
         rt.anchoredPosition = Vector3.zero;
-        yield return new WaitForSeconds(0.2f);
-        taskLists[currentList].CompletedTask(majorTaskName, minTask, CompletedFinishing);
+        openingPanel = false;
     }
 
-    IEnumerator BringDownPanel()
+    IEnumerator BringDownPanel(bool completingTask)
     {
-        while (rt.anchoredPosition.y > startingY)
+        if (completingTask)
         {
-            rt.anchoredPosition -= (Vector2.up * heightIncrease * Time.deltaTime);
-            yield return null;
+            while (rt.anchoredPosition.y > startingY)
+            {
+                rt.anchoredPosition -= (Vector2.up * heightIncrease * Time.deltaTime);
+                yield return null;
+            }
+            rt.anchoredPosition = Vector3.up * startingY;
+            if (taskLists[currentList].isCompleted())
+            {
+                ChangeList(currentList + 1);
+            }
+            openingPanel = false;
         }
-        rt.anchoredPosition = Vector3.up * startingY;
-        if (taskLists[currentList].isCompleted())
+        else
         {
-            ChangeList(currentList + 1);
+            openingPanel = true;
+            while (rt.anchoredPosition.y > startingY)
+            {
+                rt.anchoredPosition -= (Vector2.up * heightIncrease * Time.deltaTime);
+                yield return null;
+            }
+            rt.anchoredPosition = Vector3.up * startingY;
+            openingPanel = false;
         }
-        openingPanel = false;
     }
 
     void ChangeList(int index)
