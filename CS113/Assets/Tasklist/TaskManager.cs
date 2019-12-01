@@ -23,7 +23,7 @@ public class TaskManager : MonoBehaviour
 
     bool openingPanel = false;
 
-    bool open = false;
+    public bool open = false;
 
     float startingY;
 
