@@ -39,8 +39,10 @@ public class PossessionController : MonoBehaviour
 
     void Update()
     {
+        
         if (!moveLock)
-        {
+        { 
+
             if (transform.GetChild(0).gameObject.tag == "Player" && transform.childCount == 1)
             {
                 if (Input.GetKeyDown(KeyCode.F))
@@ -68,7 +70,9 @@ public class PossessionController : MonoBehaviour
             if (objectsAround[i].gameObject.CompareTag("Object"))
             {
                 yield return StartCoroutine("possessFadeOut");
+
                 GameObject possessedObj = objectsAround[i].gameObject;
+
                 transform.GetChild(0).gameObject.SetActive(false);
                 transform.position = new Vector3(possessedObj.transform.position.x, 0, possessedObj.transform.position.z);
                 possessedObj.transform.parent = transform;
