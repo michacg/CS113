@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NpcController : MonoBehaviour
 {
- 
+
     //State for our Finite State Machine
     public enum State
     {
@@ -36,22 +36,23 @@ public class NpcController : MonoBehaviour
     private int i = 0; //iterator for locations
     private Collider[] objectsAround;
     private GameObject susObject;
+    private float confusedSec = 0.0f;
 
     void Start()
     {
         currentState = State.walking;
     }
 
-    
+
     void Update()
     {
         Debug.Log("Current State" + currentState);
         Debug.Log("Location " + locations[i]);
-        
+
         npcMultiplier = GameManager.instance.npcMultiplier;
 
         LookAround();
-        switch(currentState)
+        switch (currentState)
         {
             case State.walking:
                 WalkingUpdate();
@@ -145,6 +146,7 @@ public class NpcController : MonoBehaviour
     {
         if (!possessedObjIsAround())
         {
+            confusedSec = 0.0f;
             currentState = State.confused;
             return;
         }
@@ -166,17 +168,19 @@ public class NpcController : MonoBehaviour
     {
         if (!possessedObjIsAround())
         {
+            confusedSec = 0.0f;
             currentState = State.confused;
             return;
         }
+
         //animation for scared
-        //increase scare meter
         print("I'm Scared!!");
         GameManager.instance.DecreaseScareMeter();
     }
 
     void ConfusedUpdate()
     {
+        confusedSec += Time.deltaTime;
         transform.LookAt(susObject.transform);
         float distance = Vector3.Distance(susObject.transform.position, transform.position);
 
@@ -184,11 +188,12 @@ public class NpcController : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, susObject.transform.position, speed * slowSpeedMulti);
         }
-        else
+        else if (confusedSec >= 3.0f || distance <= scaredRadius)
         {
             StartCoroutine("DoAction");
             print("I'm confused!");
             //animation for suspicion
         }
+
     }
 }
