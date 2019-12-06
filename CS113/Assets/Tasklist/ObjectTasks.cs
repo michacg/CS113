@@ -13,6 +13,8 @@ public enum CompletionType
 
 public class ObjectTasks : MonoBehaviour, Completable
 {
+    
+
     [SerializeField] List<Completion> tasksToComplete;
     [SerializeField] List<GameObject> locations;
 
@@ -51,6 +53,25 @@ public class ObjectTasks : MonoBehaviour, Completable
         }
     }
 
+    void ReleaseOrDestroy(int curr)
+    {
+        Debug.Log("here");
+        StartCoroutine(RandD(curr));
+    }
+
+    IEnumerator RandD(int curr)
+    {
+        if (tasksToComplete[curr].shouldBeDroppedOnCompletion)
+        {
+            PossessionController.instance.ReleaseAndPlace(target.transform.position + Vector3.up * 0.5f);
+        }
+        yield return new WaitForSeconds(0.5f);
+        if (tasksToComplete[curr].shouldDestroyOnCompletion)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     public void CheckForCompletion()
     {
         if (reachedTarget && currentTask < tasksToComplete.Count)
@@ -67,14 +88,16 @@ public class ObjectTasks : MonoBehaviour, Completable
 
             }
             tasksToComplete[currentTask].NumberOfActions = actionsRemaining;
-            Debug.Log(actionsRemaining);
             if (actionsRemaining <= 0)
             {
-                if(currentTask + 1 < tasksToComplete.Count)
-                    actionsRemaining = tasksToComplete[currentTask+1].NumberOfActions;
-                TaskManager.instance.CompletedTask(tasksToComplete[currentTask].task.phase,tasksToComplete[currentTask].task.MajorTaskName, tasksToComplete[currentTask].task);
+                ReleaseOrDestroy(currentTask);
+                if (currentTask + 1 < tasksToComplete.Count)
+                    actionsRemaining = tasksToComplete[currentTask + 1].NumberOfActions;
+                foreach (MinorTask task in tasksToComplete[currentTask].tasks)
+                {
+                    TaskManager.instance.CompletedTask(task.phase, task.MajorTaskName, task);
+                }
                 currentTask += 1;
-                Debug.Log(actionsRemaining);
             }
         }
     }

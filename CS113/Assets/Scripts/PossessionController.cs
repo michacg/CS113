@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PossessionController : MonoBehaviour
 {
+    public static PossessionController instance = null;
+
     [SerializeField] float m_moveSpeed = 2;
 
     [SerializeField] float m_floatHeight = 4.0f;
@@ -31,6 +33,14 @@ public class PossessionController : MonoBehaviour
 
     private Vector3 m_currentDirection = Vector3.zero;
 
+    private void Awake()
+    {
+        if(instance ==  null)
+        {
+            instance = this;
+        }
+    }
+
     void Start()
     {
         m_animator = GetComponent<Animator>();
@@ -54,8 +64,7 @@ public class PossessionController : MonoBehaviour
             }
             else if (transform.childCount >= 1 && Input.GetKeyDown(KeyCode.F))
             {
-                StartCoroutine("possessFadeIn");
-                ReleaseObject();
+                Release();
             }
             Move();
             UseItem();
@@ -91,6 +100,20 @@ public class PossessionController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, m_viewDistance);
+    }
+
+    void Release()
+    {
+        StartCoroutine("possessFadeIn");
+        ReleaseObject();
+    }
+
+    public void ReleaseAndPlace(Vector3 position)
+    {
+        Transform item = transform.GetChild(1);
+        Release();
+        item.position = position;
+        Debug.Log(position);
     }
 
     void ReleaseObject()

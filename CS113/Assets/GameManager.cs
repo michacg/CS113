@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("Scare meter amount " + scareMeterAmount);
+//        Debug.Log("Scare meter amount " + scareMeterAmount);
         if (multiplierOn)
             npcMultiplier = multiplierValue;
         else

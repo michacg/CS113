@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1922e7d3031871941a1bba62cf4e26b3, type: 3}
-  m_Name: Meat
+  m_Script: {fileID: 11500000, guid: a992cfbce964e154e93d40ca73db2a09, type: 3}
+  m_Name: RedEnvelope
   m_EditorClassIdentifier: 
-  phase: 1
-  MajorTaskName: Dumplings
-  task: Move meat to counter
+  tasks: []
+  actionsToPerform: 0
+  NumberOfActions: 0
+  type: 0
+  shouldBeDroppedOnCompletion: 1
+  shouldDestroyOnCompletion: 1

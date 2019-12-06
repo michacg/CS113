@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a992cfbce964e154e93d40ca73db2a09, type: 3}
   m_Name: CutMooncake
   m_EditorClassIdentifier: 
-  task: {fileID: 11400000, guid: 79b498c9501521d43a767e9a4a640b7b, type: 2}
+  tasks:
+  - {fileID: 11400000, guid: 79b498c9501521d43a767e9a4a640b7b, type: 2}
   actionsToPerform: 4
-  NumberOfActions: 0
+  NumberOfActions: 4
   type: 1
+  shouldBeDroppedOnCompletion: 0
+  shouldDestroyOnCompletion: 0

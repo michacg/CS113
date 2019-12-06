@@ -46,8 +46,8 @@ public class NpcController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("Current State" + currentState);
-        Debug.Log("Location " + locations[i]);
+//        Debug.Log("Current State" + currentState);
+//        Debug.Log("Location " + locations[i]);
 
         npcMultiplier = GameManager.instance.npcMultiplier;
 
@@ -181,7 +181,11 @@ public class NpcController : MonoBehaviour
     void ConfusedUpdate()
     {
         confusedSec += Time.deltaTime;
-        transform.LookAt(susObject.transform);
+        try
+        {
+            transform.LookAt(susObject.transform);
+        }
+        catch (UnityEngine.MissingReferenceException) { currentState = State.walking; return; };
         float distance = Vector3.Distance(susObject.transform.position, transform.position);
 
         if (distance > scaredRadius) //Not Scared yet

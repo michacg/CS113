@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a992cfbce964e154e93d40ca73db2a09, type: 3}
-  m_Name: MoveKnife
+  m_Name: KettleToStove
   m_EditorClassIdentifier: 
   tasks:
-  - {fileID: 11400000, guid: 5494dd8c3feb4c64b9547383d2205b02, type: 2}
+  - {fileID: 11400000, guid: c14035726edf282499026578a512ae38, type: 2}
   actionsToPerform: 1
   NumberOfActions: 1
   type: 0
-  shouldBeDroppedOnCompletion: 0
+  shouldBeDroppedOnCompletion: 1
   shouldDestroyOnCompletion: 0
