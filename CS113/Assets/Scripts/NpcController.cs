@@ -37,9 +37,11 @@ public class NpcController : MonoBehaviour
     private Collider[] objectsAround;
     private GameObject susObject;
     private float confusedSec = 0.0f;
+    private Animator anim;
 
     void Start()
     {
+        anim = GetComponent<Animator>();
         currentState = State.walking;
     }
 
@@ -78,6 +80,7 @@ public class NpcController : MonoBehaviour
 
     void LookAround()
     {
+        anim.SetInteger("walk", 0);
         if (currentState != State.scared)
         {
             if (possessedObjIsAround())
@@ -107,6 +110,7 @@ public class NpcController : MonoBehaviour
 
     void WalkingUpdate()
     {
+        anim.SetInteger("walk", 1);
         transform.LookAt(locations[i].transform);
 
         Vector3 nextLoc = new Vector3(locations[i].transform.position.x, transform.position.y, locations[i].transform.position.z);
@@ -126,6 +130,7 @@ public class NpcController : MonoBehaviour
 
     IEnumerator DoAction()
     {
+        anim.SetInteger("action", 1);
         currentState = State.Action;
         float secondsDoingAction = Random.Range(actionTimeSecMinimum, actionTimeSecMaximum);
         yield return new WaitForSeconds(secondsDoingAction);
@@ -135,6 +140,7 @@ public class NpcController : MonoBehaviour
         else
             i = (i + 1) % locations.Count;
         currentState = State.walking;
+        anim.SetInteger("action", 0);
     }
 
     void ActionUpdate()
@@ -144,6 +150,7 @@ public class NpcController : MonoBehaviour
 
     void SuspiciousUpdate()
     {
+        anim.SetInteger("sus", 1);
         if (!possessedObjIsAround())
         {
             confusedSec = 0.0f;
@@ -161,6 +168,7 @@ public class NpcController : MonoBehaviour
         else
         {
             currentState = State.scared;
+            anim.SetInteger("sus", 0);
         }
     }
 
@@ -169,11 +177,12 @@ public class NpcController : MonoBehaviour
         if (!possessedObjIsAround())
         {
             confusedSec = 0.0f;
+            anim.SetInteger("scared", 0);
             currentState = State.confused;
             return;
         }
 
-        //animation for scared
+        anim.SetInteger("scared", 1);
         print("I'm Scared!!");
         GameManager.instance.DecreaseScareMeter();
     }
