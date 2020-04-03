@@ -78,6 +78,12 @@ public class NpcController : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        // Keeps NPC from being wobbly (freeze X rotation to 0 degrees).
+        transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+    }
+
     void LookAround()
     {
         anim.SetInteger("walk", 0);
@@ -203,9 +209,8 @@ public class NpcController : MonoBehaviour
         }
         else if (confusedSec >= 3.0f || distance <= scaredRadius)
         {
-            StartCoroutine("DoAction");
+            StartCoroutine("DoAction"); // animation for Action will occur
             print("I'm confused!");
-            //animation for suspicion
         }
 
     }
