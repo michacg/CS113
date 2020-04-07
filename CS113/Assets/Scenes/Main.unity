@@ -41345,7 +41345,7 @@ MonoBehaviour:
   m_floatHeight: 4
   m_floatMultiplier: 0.1
   m_viewDistance: 4
-  actionButton: 0
+  actionButton: 101
   player: {fileID: 330672531}
   playerModel: {fileID: 1888566042}
   main_camera: {fileID: 1618993129}

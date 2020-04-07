@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    [SerializeField] List<GameObject> npcList = new List<GameObject>();
+    // [SerializeField] List<GameObject> npcList = new List<GameObject>();
     [SerializeField] float scareMeterAmount;
     [SerializeField] float coolDownSec     = 5f;
     [SerializeField] float scareMeterAdder = 0.3f;
